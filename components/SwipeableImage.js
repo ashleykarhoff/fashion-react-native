@@ -5,7 +5,7 @@ class SwipeableImage extends Component {
   render() {
     return (
       <Image
-        style={{ width: 311, height: 450 }}
+        style={{ width: 370, height: 500 }}
         source={{ uri: this.props.source }}
       ></Image>
     );
