@@ -2,10 +2,20 @@ import React, { Component } from "react";
 import Swipe from "./components/swipe";
 import ErrorBoundary from "./components/ErrorBoundary";
 import TopNav from "./components/TopNav";
-// import { Provider as ReduxProvider } from "react-redux";
-// import configureStore from "./modules/store";
+import store from "./redux/store";
+import {
+  fetchUser,
+  setItemFilter,
+  itemFilters,
+  saveItem,
+  removeItem
+} from "./redux/actions";
 
-// const reduxStore = configureStore(window.REDUX_INITAL_DATA);
+// store.dispatch(setItemFilter(itemFilters.COATS));
+// store.dispatch(saveItem("High rise denim"));
+// store.dispatch(removeItem("High rise denim"));
+// console.log(store.getState());
+// store.dispatch(fetchUser(1)).then(() => console.log(store.getState()));
 
 export default class HelloWorldApp extends Component {
   state = {
@@ -15,24 +25,24 @@ export default class HelloWorldApp extends Component {
     board: []
   };
 
-  handleSave = () => {
-    const boardId = this.state.user.boards[0].id;
-    const item = this.state.item;
-    const boardItems = this.state.board;
-    boardItems.push(item);
-    this.setState({ board: boardItems });
+  // handleSave = () => {
+  //   const boardId = this.state.user.boards[0].id;
+  //   const item = this.state.item;
+  //   const boardItems = this.state.board;
+  //   boardItems.push(item);
+  //   this.setState({ board: boardItems });
 
-    fetch("http://localhost:3000/api/v1/board_items", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        board_id: boardId,
-        item_id: item.id
-      })
-    });
+  //   fetch("http://localhost:3000/api/v1/board_items", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       board_id: boardId,
+  //       item_id: item.id
+  //     })
+  //   });
 
-    this.nextItem();
-  };
+  //   this.nextItem();
+  // };
 
   nextItem = () => {
     const currentItem = this.state.items.filter(i => i === this.state.item)[0];
@@ -61,15 +71,14 @@ export default class HelloWorldApp extends Component {
   componentDidMount() {
     this.getUserData();
     this.getItems();
+    // console.log(store.getState());
   }
 
   render() {
     return (
       <ErrorBoundary>
-        {/* <ReduxProvider store={reduxStore}> */}
         <TopNav />
         <Swipe state={this.state} handleSave={this.handleSave} />
-        {/* </ReduxProvider> */}
       </ErrorBoundary>
     );
   }

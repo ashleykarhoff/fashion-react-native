@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { View, Button } from "react-native";
 import SwipeableImage from "./SwipeableImage";
 
+handleSave = () => {
+  this.props.saveItem(this.state.item);
+};
+
 class Swipe extends Component {
   render() {
     return (
@@ -13,7 +17,7 @@ class Swipe extends Component {
         />
         <View style={{ flexDirection: "row" }}>
           <Button title="No" onPress={this.handleNext}></Button>
-          <Button title="Yes" onPress={this.props.handleSave}></Button>
+          <Button title="Yes" onPress={this.handleSave}></Button>
         </View>
       </View>
     );
