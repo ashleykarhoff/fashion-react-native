@@ -39,11 +39,31 @@ export function fetchUser(userId) {
   };
 }
 
-export const LOAD_ITEMS = "LOAD_ITEMS";
-export function loadItems(items) {
+export const REQUEST_ITEMS = "REQUEST_ITEMS";
+export function requestItems() {
   return {
-    type: LOAD_ITEMS,
-    items
+    type: REQUEST_ITEMS
+  };
+}
+
+export const RECEIVE_ITEMS = "RECEIVE_ITEMS";
+export function receiveItems(json) {
+  return {
+    type: RECEIVE_ITEMS,
+    data: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchItems() {
+  return function(dispatch) {
+    dispatch(requestItems());
+    return fetch(`http://localhost:3000/api/v1/items`)
+      .then(
+        resp => resp.json(),
+        error => console.log("An error occured ", error)
+      )
+      .then(json => dispatch(receiveItems(json)));
   };
 }
 

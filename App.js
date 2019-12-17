@@ -4,6 +4,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import TopNav from "./components/TopNav";
 import store from "./redux/store";
 import {
+  fetchItems,
   fetchUser,
   setItemFilter,
   itemFilters,
@@ -15,7 +16,7 @@ import {
 // store.dispatch(saveItem("High rise denim"));
 // store.dispatch(removeItem("High rise denim"));
 // console.log(store.getState());
-// store.dispatch(fetchUser(1)).then(() => console.log(store.getState()));
+store.dispatch(fetchItems()).then(() => console.log(store.getState()));
 
 export default class HelloWorldApp extends Component {
   state = {

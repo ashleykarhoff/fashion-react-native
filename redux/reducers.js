@@ -2,6 +2,8 @@ import {
   INVALIDATE_REQUEST,
   REQUEST_USER,
   RECEIVE_USER,
+  REQUEST_ITEMS,
+  RECEIVE_ITEMS,
   itemFilters,
   SET_ITEM_FILTER,
   SAVE_ITEM,
@@ -42,6 +44,39 @@ function user(
   }
 }
 
+function items(
+  state = {
+    isFetching: false,
+    didInvalidate: false,
+    items: []
+  },
+  action
+) {
+  switch (action.type) {
+    case INVALIDATE_REQUEST:
+      return Object.assign({}, state, {
+        didInvalidate: true
+      });
+
+    case REQUEST_ITEMS:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      });
+
+    case RECEIVE_ITEMS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false,
+        items: action.data,
+        lastUpdated: action.receivedAt
+      });
+
+    default:
+      return state;
+  }
+}
+
 function itemFilter(state = itemFilters.SHOW_ALL, action) {
   switch (action.type) {
     case SET_ITEM_FILTER:
@@ -67,6 +102,7 @@ function savedItems(state = [], action) {
 
 const reducers = combineReducers({
   user,
+  items,
   itemFilter,
   savedItems
 });
