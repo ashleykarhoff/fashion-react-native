@@ -59,10 +59,7 @@ export function fetchItems() {
   return function(dispatch) {
     dispatch(requestItems());
     return fetch(`http://localhost:3000/api/v1/items`)
-      .then(
-        resp => resp.json(),
-        error => console.log("An error occured ", error)
-      )
+      .then(resp => resp.json())
       .then(json => dispatch(receiveItems(json)));
   };
 }

@@ -68,7 +68,7 @@ function items(
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        items: action.data,
+        allItems: action.data,
         lastUpdated: action.receivedAt
       });
 
