@@ -80,6 +80,24 @@ export function saveItem(item) {
   };
 }
 
+export function persistItem(item, userId) {
+  return function(dispatch) {
+    dispatch(saveItem(item));
+    return fetch(`http://localhost:3000/api/v1/board_items`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        board_id: userId,
+        item_id: item.id
+      })
+    })
+      .then(resp => resp.json())
+      .then(console.log);
+  };
+}
+
 export const REMOVE_ITEM = "REMOVE_ITEM";
 export function removeItem(item) {
   return {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, View, Text, Image } from "react-native";
 import { connect } from "react-redux";
 import Swiper from "react-native-deck-swiper";
-import { fetchItems } from "./../redux/actions";
+import { fetchItems, persistItem } from "./../redux/actions";
 import styles from "../assets/styles";
 
 class Discovery extends Component {
@@ -12,11 +12,10 @@ class Discovery extends Component {
 
   render() {
     // npm package has a bug that won't re-render Swiper cards
-    if (this.props.item) {
-      console.log("error");
+    if (!this.props.items) {
       return (
         <View>
-          <Text>Test</Text>
+          <Text>Loading...</Text>
         </View>
       );
     }
@@ -36,7 +35,7 @@ class Discovery extends Component {
           }}
           onSwipedRight={cardIndex => {
             const item = this.props.items[cardIndex];
-            console.log(item);
+            this.props.saveItem(item, 1);
           }}
           onSwipedLeft={() => {
             // console.log("Nayyyy");
@@ -62,7 +61,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getItems: () => dispatch(fetchItems())
+    getItems: () => dispatch(fetchItems()),
+    saveItem: (item, userId) => dispatch(persistItem(item, userId))
   };
 }
 
