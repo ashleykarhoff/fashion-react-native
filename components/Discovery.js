@@ -1,68 +1,69 @@
 import React, { Component } from "react";
-import { Button, View, Text } from "react-native";
+import { Button, View, Text, Image } from "react-native";
 import { connect } from "react-redux";
 import Swiper from "react-native-deck-swiper";
 import { fetchItems } from "./../redux/actions";
-// import Swipe from "./Swipe";
-import store from "../redux/store";
 import styles from "../assets/styles";
 
 class Discovery extends Component {
-  state = {
-    items: []
+  componentDidMount = () => {
+    this.props.getItems();
   };
 
-  componentDidMount() {
-    store
-      .dispatch(fetchItems())
-      .then(resp => this.setState({ items: resp.data }));
-  }
-
   render() {
+    // npm package has a bug that won't re-render Swiper cards
+    if (this.props.item) {
+      console.log("error");
+      return (
+        <View>
+          <Text>Test</Text>
+        </View>
+      );
+    }
     return (
-      //   <View style={{ flex: 4, justifyContent: "center", alignItems: "center" }}>
-      //     <Text>Discovery Container </Text>
-      //     {this.state.items.map(i => (
-      //       <Text key={i.id}>{i.name}</Text>
-      //     ))}
-      //     <Swipe />
-      //   </View>
       <View style={styles.container}>
         <Swiper
-          cards={["DO", "MORE", "OF", "WHAT", "MAKES", "YOU", "HAPPY"]}
+          cards={this.props.items}
           renderCard={card => {
             return (
-              <View style={styles.card}>
-                <Text style={styles.text}>{card}</Text>
+              <View style={styles.image}>
+                <Image
+                  source={{ uri: card.image_url }}
+                  style={{ width: 372, height: 582 }}
+                />
               </View>
             );
           }}
-          onSwiped={cardIndex => {
-            console.log(cardIndex);
+          onSwipedRight={cardIndex => {
+            const item = this.props.items[cardIndex];
+            console.log(item);
+          }}
+          onSwipedLeft={() => {
+            // console.log("Nayyyy");
           }}
           onSwipedAll={() => {
-            console.log("onSwipedAll");
+            // console.log("onSwipedAll");
           }}
-          cardIndex={0}
           backgroundColor={"#4FD0E9"}
           stackSize={3}
-        >
-          {/* <Button
-            onPress={() => {
-              console.log("oulala");
-            }}
-            title="Press me"
-          >
-            You can press me
-          </Button> */}
-        </Swiper>
+        ></Swiper>
       </View>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return state;
+  const { allItems } = state.items;
+
+  return {
+    items: allItems
+  };
 }
 
-export default connect(mapStateToProps)(Discovery);
+function mapDispatchToProps(dispatch) {
+  return {
+    getItems: () => dispatch(fetchItems())
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Discovery);
