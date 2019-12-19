@@ -1,6 +1,5 @@
 import fetch from "cross-fetch";
 // Action constants
-// export const FETCH_SAVED_ITEMS = "REMOVE_ITEM";
 export const INVALIDATE_REQUEST = "INVALIDATE_REQUEST";
 export function invalidateRequest(request) {
   return {
@@ -64,14 +63,6 @@ export function fetchItems() {
   };
 }
 
-export const SHOW_ITEM = "SHOW_ITEM";
-export function showItem(item) {
-  return {
-    type: SHOW_ITEM,
-    item
-  };
-}
-
 export const SAVE_ITEM = "SAVE_ITEM";
 export function saveItem(item) {
   return {
@@ -98,6 +89,32 @@ export function persistItem(item, userId) {
   };
 }
 
+export const FETCH_SAVED_ITEMS = "FETCH_SAVED_ITEMS";
+export function fetchSavedItems() {
+  return {
+    type: FETCH_SAVED_ITEMS
+  };
+}
+
+export const RECEIVE_SAVED_ITEMS = "RECEIVE_SAVED_ITEMS";
+export function receiveSavedItems(json) {
+  return {
+    type: RECEIVE_SAVED_ITEMS,
+    data: json,
+    receivedAt: Date.now()
+  };
+}
+export function getSavedItems() {
+  return function(dispatch) {
+    dispatch(fetchSavedItems());
+    return fetch(`http://localhost:3000/api/v1/board_items`)
+      .then(resp => resp.json())
+      .then(items => items.filter(item => item.board_id === 1))
+      .then(json => dispatch(receiveSavedItems(json)));
+  };
+}
+
+// Backlog of actions to create later:
 export const REMOVE_ITEM = "REMOVE_ITEM";
 export function removeItem(item) {
   return {
@@ -116,5 +133,13 @@ export function setItemFilter(filter) {
   return {
     type: SET_ITEM_FILTER,
     filter
+  };
+}
+
+export const SHOW_ITEM = "SHOW_ITEM";
+export function showItem(item) {
+  return {
+    type: SHOW_ITEM,
+    item
   };
 }

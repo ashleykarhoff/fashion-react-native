@@ -7,7 +7,8 @@ import {
   itemFilters,
   SET_ITEM_FILTER,
   SAVE_ITEM,
-  REMOVE_ITEM
+  REMOVE_ITEM,
+  RECEIVE_SAVED_ITEMS
 } from "./actions";
 import { combineReducers } from "redux";
 
@@ -87,13 +88,24 @@ function itemFilter(state = itemFilters.SHOW_ALL, action) {
   }
 }
 
-function savedItems(state = [], action) {
+function savedItems(
+  state = {
+    items: []
+  },
+  action
+) {
   switch (action.type) {
     case SAVE_ITEM:
       return [...state, action.item];
 
     case REMOVE_ITEM:
       return [...state, state.filter(i => i !== action.item)];
+
+    case RECEIVE_SAVED_ITEMS:
+      return Object.assign({}, state, {
+        items: action.data,
+        lastUpdated: action.receivedAt
+      });
 
     default:
       return state;

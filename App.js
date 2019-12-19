@@ -1,9 +1,9 @@
 import React from "react";
 import { Provider } from "react-redux";
 import Navigator from "./routes/homeStack";
-import Discovery from "./components/Discovery";
+// import Discovery from "./components/Discovery";
 import store from "./redux/store";
-import TopNav from "./components/TopNav";
+// import TopNav from "./components/TopNav";
 
 const App = () => {
   return (
