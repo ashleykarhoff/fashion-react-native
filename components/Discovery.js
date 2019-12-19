@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, View, Text, Image } from "react-native";
+import { View, Text, Image, Button } from "react-native";
 import { connect } from "react-redux";
 import Swiper from "react-native-deck-swiper";
 import { fetchItems, persistItem } from "./../redux/actions";
@@ -46,6 +46,10 @@ class Discovery extends Component {
           backgroundColor={"#4FD0E9"}
           stackSize={3}
         ></Swiper>
+        <Button
+          title="Go to board"
+          onPress={() => this.props.navigation.navigate("Board")}
+        ></Button>
       </View>
     );
   }
