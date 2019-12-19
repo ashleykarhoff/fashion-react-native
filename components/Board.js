@@ -16,6 +16,10 @@ class Board extends Component {
     this.props.getSavedItems();
   };
 
+  handleShowPage = item => {
+    this.props.navigation.navigate("Show", { id: item.id });
+  };
+
   render() {
     if (this.props.savedItems === []) {
       return (
@@ -29,12 +33,7 @@ class Board extends Component {
         <FlatList
           data={this.props.savedItems}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={
-                () => this.props.navigation.navigate("Show", { id: item.id })
-                // console.log("pressin", item)
-              }
-            >
+            <TouchableOpacity onPress={() => this.handleShowPage(item)}>
               <Image
                 source={{ uri: item.item.image_url }}
                 style={{ width: 372, height: 582 }}
@@ -44,22 +43,6 @@ class Board extends Component {
           keyExtractor={boardItem => boardItem.id}
         />
       </SafeAreaView>
-      //   <SafeAreaView style={styles.container}>
-      //     <FlatList
-      //       data={this.props.savedItems}
-      //       renderItem={({ item }) => (
-      //         <Image
-      //           source={{ uri: item.item.image_url }}
-      //           style={{ width: 372, height: 582 }}
-      //           onPress={() =>
-      //             // this.props.navigation.navigate("Show", { id: item.id })
-      //             console.log("pressin")
-      //           }
-      //         />
-      //       )}
-      //       keyExtractor={boardItem => boardItem.id}
-      //     />
-      //   </SafeAreaView>
     );
   }
 }
@@ -73,10 +56,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getSavedItems: () => dispatch(getSavedItems())
+    getSavedItems: () => dispatch(getSavedItems()),
+    showItem: item => dispatch(showItem(item))
   };
 }
-
-// export default Board;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

@@ -114,6 +114,32 @@ export function getSavedItems() {
   };
 }
 
+export const SHOW_ITEM = "SHOW_ITEM";
+export function showItem(item) {
+  return {
+    type: SHOW_ITEM,
+    item: item
+  };
+}
+
+export const RECEIVE_SHOW_ITEM = "RECEIVE_SHOW_ITEM";
+export function receiveShowItem(json) {
+  return {
+    type: RECEIVE_SHOW_ITEM,
+    data: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchShowItem(itemId) {
+  return function(dispatch) {
+    dispatch(showItem(itemId));
+    return fetch(`http://localhost:3000/api/v1/board_items/${itemId}`)
+      .then(resp => resp.json())
+      .then(json => dispatch(receiveShowItem(json)));
+  };
+}
+
 // Backlog of actions to create later:
 export const REMOVE_ITEM = "REMOVE_ITEM";
 export function removeItem(item) {
@@ -133,13 +159,5 @@ export function setItemFilter(filter) {
   return {
     type: SET_ITEM_FILTER,
     filter
-  };
-}
-
-export const SHOW_ITEM = "SHOW_ITEM";
-export function showItem(item) {
-  return {
-    type: SHOW_ITEM,
-    item
   };
 }

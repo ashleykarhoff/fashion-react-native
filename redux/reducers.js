@@ -8,7 +8,9 @@ import {
   SET_ITEM_FILTER,
   SAVE_ITEM,
   REMOVE_ITEM,
-  RECEIVE_SAVED_ITEMS
+  RECEIVE_SAVED_ITEMS,
+  SHOW_ITEM,
+  RECEIVE_SHOW_ITEM
 } from "./actions";
 import { combineReducers } from "redux";
 
@@ -112,11 +114,22 @@ function savedItems(
   }
 }
 
+function showItem(state = [], action) {
+  switch (action.type) {
+    case RECEIVE_SHOW_ITEM:
+      return [...state, action.data];
+
+    default:
+      return state;
+  }
+}
+
 const reducers = combineReducers({
   user,
   items,
   itemFilter,
-  savedItems
+  savedItems,
+  showItem
 });
 
 export default reducers;
