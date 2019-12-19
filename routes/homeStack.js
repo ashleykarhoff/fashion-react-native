@@ -2,6 +2,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import Discovery from "../components/Discovery";
 import Board from "../components/Board";
+import Show from "../components/Show";
 
 const screens = {
   Home: {
@@ -9,6 +10,9 @@ const screens = {
   },
   Board: {
     screen: Board
+  },
+  Show: {
+    screen: Show
   }
 };
 
