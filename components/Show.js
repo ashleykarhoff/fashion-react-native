@@ -34,6 +34,7 @@ class Show extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state.showItem);
   return {
     showItem: state.showItem[0]
   };

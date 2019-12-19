@@ -117,7 +117,7 @@ function savedItems(
 function showItem(state = [], action) {
   switch (action.type) {
     case RECEIVE_SHOW_ITEM:
-      return [...state, action.data];
+      return [action.data];
 
     default:
       return state;
