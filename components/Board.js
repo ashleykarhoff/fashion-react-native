@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { SafeAreaView, FlatList, View, Text, Image } from "react-native";
 import { connect } from "react-redux";
 import { getSavedItems } from "../redux/actions";
+import styles from "../assets/styles";
 
 class Board extends Component {
   componentDidMount = () => {
@@ -9,19 +10,26 @@ class Board extends Component {
   };
 
   render() {
-    if (!this.props.savedItems) {
+    if (this.props.savedItems === []) {
       return (
         <View>
-          <Text>Loading...</Text>
+          <Text>Nothing to see here...</Text>
         </View>
       );
     }
     return (
-      <View>
-        {this.props.savedItems.map(boardItem => (
-          <Text>{boardItem.item.name}</Text>
-        ))}
-      </View>
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={this.props.savedItems}
+          renderItem={({ item }) => (
+            <Image
+              source={{ uri: item.item.image_url }}
+              style={{ width: 372, height: 582 }}
+            />
+          )}
+          keyExtractor={boardItem => boardItem.id}
+        />
+      </SafeAreaView>
     );
   }
 }
