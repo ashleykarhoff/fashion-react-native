@@ -37,6 +37,7 @@ class Discovery extends Component {
             const item = this.props.items[cardIndex];
             this.props.persistItem(item, 1); // (item, userId)
           }}
+          onSwipedAll={console.log("all done")}
           backgroundColor={"#4FD0E9"}
           stackSize={3}
         ></Swiper>

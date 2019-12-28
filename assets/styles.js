@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   itemInfo: {
-    // alignSelf: "center"
     margin: 20
   }
 });
