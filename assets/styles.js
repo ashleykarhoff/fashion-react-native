@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 4,
-    backgroundColor: "#F5FCFF"
+    backgroundColor: "white"
   },
   card: {
     flex: 0.75,
@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 50,
     backgroundColor: "transparent"
+  },
+  board: {
+    alignSelf: "center"
   }
 });
 

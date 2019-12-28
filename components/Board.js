@@ -31,14 +31,15 @@ class Board extends Component {
     }
 
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.board}>
         <FlatList
           data={this.props.savedItems}
+          numColumns={2}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => this.handleShowPage(item)}>
               <Image
                 source={{ uri: item.item.image_url }}
-                style={{ width: 372, height: 582 }}
+                style={{ width: 186, height: 291 }}
               />
             </TouchableOpacity>
           )}
