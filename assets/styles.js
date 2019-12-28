@@ -28,6 +28,15 @@ const styles = StyleSheet.create({
   },
   board: {
     alignSelf: "center"
+  },
+  itemPageImage: {
+    width: 372,
+    height: 582,
+    alignSelf: "center"
+  },
+  itemInfo: {
+    // alignSelf: "center"
+    margin: 20
   }
 });
 

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, Image, Button } from "react-native";
 import { connect } from "react-redux";
 import { fetchShowItem, handleDelete } from "../redux/actions";
+import styles from "../assets/styles";
 
 class Show extends Component {
   componentDidMount = () => {
@@ -27,11 +28,13 @@ class Show extends Component {
       <View>
         <Image
           source={{ uri: this.props.item.image_url }}
-          style={{ width: 372, height: 582 }}
+          style={styles.itemPageImage}
         />
-        <Text>{this.props.item.name}</Text>
-        <Text>{this.props.item.brand}</Text>
-        <Text>${this.props.item.price}</Text>
+        <View style={styles.itemInfo}>
+          <Text>{this.props.item.name}</Text>
+          <Text>{this.props.item.brand}</Text>
+          <Text>${this.props.item.price}</Text>
+        </View>
         <Button title="Purchase"></Button>
         <Button
           title="Delete"
