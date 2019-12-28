@@ -98,26 +98,28 @@ function savedItems(
 ) {
   switch (action.type) {
     case SAVE_ITEM:
-      return [...state, action.item];
+      return { ...state, items: state.items.push(action.item) };
 
     case REMOVE_ITEM:
-      return [...state, state.filter(i => i !== action.item)];
+      return { ...state, items: state.items.filter(i => i !== action.payload) };
 
     case RECEIVE_SAVED_ITEMS:
-      return Object.assign({}, state, {
-        items: action.data,
-        lastUpdated: action.receivedAt
-      });
+      return { ...state, items: action.data };
 
     default:
       return state;
   }
 }
 
-function showItem(state = [], action) {
+function showItem(
+  state = {
+    item: []
+  },
+  action
+) {
   switch (action.type) {
     case RECEIVE_SHOW_ITEM:
-      return [action.data];
+      return { ...state, item: action.data };
 
     default:
       return state;

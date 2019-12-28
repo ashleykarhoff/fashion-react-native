@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, Image, Button } from "react-native";
 import { connect } from "react-redux";
-import { fetchShowItem } from "../redux/actions";
+import { fetchShowItem, handleDelete } from "../redux/actions";
 
 class Show extends Component {
   componentDidMount = () => {
@@ -9,8 +9,14 @@ class Show extends Component {
     this.props.fetchShowItem(itemId);
   };
 
+  onDelete = id => {
+    this.props.handleDelete(id);
+    this.props.navigation.navigate("Board");
+    // this.props.navigation.navigate("Board", { deleted: true });
+  };
+
   render() {
-    if (!this.props.showItem) {
+    if (!this.props.item) {
       return (
         <View>
           <Text>Nothing to see here!</Text>
@@ -20,29 +26,34 @@ class Show extends Component {
     return (
       <View>
         <Image
-          source={{ uri: this.props.showItem.item.image_url }}
+          source={{ uri: this.props.item.image_url }}
           style={{ width: 372, height: 582 }}
         />
-        <Text>{this.props.showItem.item.name}</Text>
-        <Text>{this.props.showItem.item.brand}</Text>
-        <Text>${this.props.showItem.item.price}</Text>
+        <Text>{this.props.item.name}</Text>
+        <Text>{this.props.item.brand}</Text>
+        <Text>${this.props.item.price}</Text>
         <Button title="Purchase"></Button>
-        <Button title="Delete"></Button>
+        <Button
+          title="Delete"
+          onPress={() => this.onDelete(this.props.boardItemId)}
+        ></Button>
       </View>
     );
   }
 }
 
 function mapStateToProps(state) {
-  console.log(state.showItem);
+  //   console.log("SHOW ITEM:", state.showItem);
   return {
-    showItem: state.showItem[0]
+    boardItemId: state.showItem.item.id,
+    item: state.showItem.item.item
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchShowItem: id => dispatch(fetchShowItem(id))
+    fetchShowItem: id => dispatch(fetchShowItem(id)),
+    handleDelete: id => dispatch(handleDelete(id))
   };
 }
 

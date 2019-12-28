@@ -35,13 +35,7 @@ class Discovery extends Component {
           }}
           onSwipedRight={cardIndex => {
             const item = this.props.items[cardIndex];
-            this.props.saveItem(item, 1);
-          }}
-          onSwipedLeft={() => {
-            // console.log("Nayyyy");
-          }}
-          onSwipedAll={() => {
-            // console.log("onSwipedAll");
+            this.props.persistItem(item, 1); // (item, userId)
           }}
           backgroundColor={"#4FD0E9"}
           stackSize={3}
@@ -56,17 +50,15 @@ class Discovery extends Component {
 }
 
 function mapStateToProps(state) {
-  const { allItems } = state.items;
-
   return {
-    items: allItems
+    items: state.items.allItems
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getItems: () => dispatch(fetchItems()),
-    saveItem: (item, userId) => dispatch(persistItem(item, userId))
+    persistItem: (item, userId) => dispatch(persistItem(item, userId))
   };
 }
 

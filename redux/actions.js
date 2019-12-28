@@ -73,26 +73,21 @@ export function saveItem(item) {
 
 export function persistItem(item, userId) {
   return function(dispatch) {
-    dispatch(saveItem(item));
-    return fetch(`http://localhost:3000/api/v1/board_items`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        board_id: userId,
-        item_id: item.id
+    return (
+      fetch(`http://localhost:3000/api/v1/board_items`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          board_id: userId,
+          item_id: item.id
+        })
       })
-    })
-      .then(resp => resp.json())
-      .then(console.log);
-  };
-}
-
-export const FETCH_SAVED_ITEMS = "FETCH_SAVED_ITEMS";
-export function fetchSavedItems() {
-  return {
-    type: FETCH_SAVED_ITEMS
+        .then(resp => resp.json())
+        // .then(console.log);
+        .then(item => dispatch(saveItem(item)))
+    );
   };
 }
 
@@ -106,7 +101,6 @@ export function receiveSavedItems(json) {
 }
 export function getSavedItems() {
   return function(dispatch) {
-    dispatch(fetchSavedItems());
     return fetch(`http://localhost:3000/api/v1/board_items`)
       .then(resp => resp.json())
       .then(items => items.filter(item => item.board_id === 1))
@@ -140,14 +134,25 @@ export function fetchShowItem(itemId) {
   };
 }
 
-// Backlog of actions to create later:
 export const REMOVE_ITEM = "REMOVE_ITEM";
 export function removeItem(item) {
   return {
     type: REMOVE_ITEM,
-    item
+    payload: item
   };
 }
+
+export function handleDelete(itemId) {
+  return function(dispatch) {
+    return fetch(`http://localhost:3000/api/v1/board_items/${itemId}`, {
+      method: "DELETE"
+    })
+      .then(resp => resp.json())
+      .then(item => dispatch(removeItem(item)));
+  };
+}
+
+// Backlog of actions to create later:
 
 export const SET_ITEM_FILTER = "SET_ITEM_FILTER";
 export const itemFilters = {

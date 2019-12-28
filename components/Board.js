@@ -21,13 +21,15 @@ class Board extends Component {
   };
 
   render() {
-    if (this.props.savedItems === []) {
+    // Bandaid fix for bug where this.props.savedItems returns the # of items in savedItems instead of an object
+    if (typeof this.props.savedItems !== "object") {
       return (
         <View>
           <Text>Nothing to see here...</Text>
         </View>
       );
     }
+
     return (
       <SafeAreaView style={styles.container}>
         <FlatList
@@ -40,7 +42,7 @@ class Board extends Component {
               />
             </TouchableOpacity>
           )}
-          keyExtractor={boardItem => boardItem.id}
+          keyExtractor={item => item.id}
         />
       </SafeAreaView>
     );
@@ -48,9 +50,8 @@ class Board extends Component {
 }
 
 function mapStateToProps(state) {
-  const { items } = state.savedItems;
   return {
-    savedItems: items
+    savedItems: state.savedItems.items
   };
 }
 
