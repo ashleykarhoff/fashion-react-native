@@ -1,5 +1,21 @@
 import fetch from "cross-fetch";
 
+// AUTHENTICATION ACTIONS
+export const SIGNIN = "SIGNIN";
+export function signIn(signInData) {
+  // post data to endpoint
+  // send response to receiveSignInData(json)
+}
+
+export const RECEIVE_SIGN_IN_DATA = "RECEIVE_SIGN_IN_DATA";
+function receiveSignInData(json) {
+  return {
+    type: RECEIVE_SIGN_IN_DATA,
+    data: json,
+    receivedAt: Date.now()
+  };
+}
+
 // USER ACTIONS
 export const REQUEST_USER = "REQUEST_USER";
 export function requestUser(user) {
