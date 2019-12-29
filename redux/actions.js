@@ -1,33 +1,28 @@
 import fetch from "cross-fetch";
+import { AsyncStorage } from "react-native";
 
 // AUTHENTICATION ACTIONS
 export const SIGNIN = "SIGNIN";
-export function signIn(email, password, passwordConfirmation) {
-  return fetch(`http://localhost:3000/api/v1/sessions`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json"
-    },
-    body: JSON.stringify({
-      email: email,
-      password: password,
-      passwordConfirmation: passwordConfirmation
+export function signIn(email, password) {
+  return function(dispatch) {
+    return fetch(`http://localhost:3000/api/v1/sessions`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
     })
-  })
-    .then(resp => resp.json())
-    .then(console.log);
-  // .then(item => dispatch(saveItem(item)))
-  // post data to endpoint
-  // send response to receiveSignInData(json)
+      .then(resp => resp.json())
+      .then(json => dispatch(receiveToken(json)));
+  };
 }
 
-export const RECEIVE_SIGN_IN_DATA = "RECEIVE_SIGN_IN_DATA";
-function receiveSignInData(json) {
-  return {
-    type: RECEIVE_SIGN_IN_DATA,
-    data: json,
-    receivedAt: Date.now()
-  };
+export const RECEIVE_TOKEN = "RECEIVE_TOKEN";
+async function receiveToken(json) {
+  await AsyncStorage.setItem("user", json);
 }
 
 // USER ACTIONS

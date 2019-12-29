@@ -11,14 +11,8 @@ class SignIn extends React.Component {
     return (
       <Formik
         style={styles.container}
-        initialValues={{ email: "", password: "", passwordConfirmation: "" }}
-        onSubmit={values =>
-          this.props.signIn(
-            values.email,
-            values.password,
-            values.passwordConfirmation
-          )
-        }
+        initialValues={{ email: "", password: "" }}
+        onSubmit={values => this.props.signIn(values.email, values.password)}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View>
@@ -38,14 +32,6 @@ class SignIn extends React.Component {
               value={values.password}
               secureTextEntry
             />
-            <Text>Password Confirmation</Text>
-            <TextInput
-              style={{ backgroundColor: "#ededed", height: 30 }}
-              onChangeText={handleChange("passwordConfirmation")}
-              onBlur={handleBlur("passwordConfirmation")}
-              value={values.passwordConfirmation}
-              secureTextEntry
-            />
             <Button onPress={handleSubmit} title="Submit" />
           </View>
         )}
@@ -56,8 +42,7 @@ class SignIn extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    signIn: (email, password, passwordConfirmation) =>
-      dispatch(signIn(email, password, passwordConfirmation))
+    signIn: (email, password) => dispatch(signIn(email, password))
   };
 }
 export default connect(null, mapDispatchToProps)(SignIn);
