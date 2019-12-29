@@ -2,11 +2,18 @@ import React from "react";
 import { View, Text, Button } from "react-native";
 import { Formik } from "formik";
 import { TextInput } from "react-native-gesture-handler";
-import { signIn } from "../redux/actions";
+import { signIn, setSession } from "../redux/actions";
 import { connect } from "react-redux";
 import styles from "../assets/styles";
 
 class SignIn extends React.Component {
+  componentDidUpdate() {
+    // this.props.navigation.navigate("Board")
+    if (this.props.session) {
+      this.props.navigation.navigate("Home");
+    }
+  }
+
   render() {
     return (
       <Formik
@@ -40,9 +47,16 @@ class SignIn extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapStateToProps(state) {
   return {
-    signIn: (email, password) => dispatch(signIn(email, password))
+    session: state.session.session
   };
 }
-export default connect(null, mapDispatchToProps)(SignIn);
+
+function mapDispatchToProps(dispatch) {
+  return {
+    signIn: (email, password) => dispatch(signIn(email, password)),
+    setSession: id => dispatch(setSession(id))
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

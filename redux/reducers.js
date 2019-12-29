@@ -9,10 +9,26 @@ import {
   SAVE_ITEM,
   REMOVE_ITEM,
   RECEIVE_SAVED_ITEMS,
+  SET_SESSION,
   SHOW_ITEM,
   RECEIVE_SHOW_ITEM
 } from "./actions";
 import { combineReducers } from "redux";
+
+function session(
+  state = {
+    sessionId: undefined
+  },
+  action
+) {
+  switch (action.type) {
+    case SET_SESSION:
+      return { ...state, session: action.payload };
+
+    default:
+      return state;
+  }
+}
 
 function user(
   state = {
@@ -127,6 +143,7 @@ function showItem(
 }
 
 const reducers = combineReducers({
+  session,
   user,
   items,
   itemFilter,

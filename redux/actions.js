@@ -15,15 +15,35 @@ export function signIn(email, password) {
         password: password
       })
     })
-      .then(resp => resp.json())
-      .then(json => dispatch(receiveToken(json)));
+      .then(
+        resp => resp.json(),
+        error => console.log("An error occured ", error)
+      )
+      .then(json => dispatch(setSession(json)))
+      .catch(console.error);
   };
 }
 
-export const RECEIVE_TOKEN = "RECEIVE_TOKEN";
-async function receiveToken(json) {
-  await AsyncStorage.setItem("user", json);
+export const SET_SESSION = "SET_SESSION";
+export function setSession(json) {
+  return function(dispatch) {
+    AsyncStorage.setItem("session", JSON.stringify({ session: json }), () => {
+      AsyncStorage.getItem("session", (err, result) => {
+        dispatch({
+          type: SET_SESSION,
+          payload: result
+        });
+      });
+    });
+  };
 }
+
+// export const GET_SESSION = "SET_SESSION";
+// export function getSession() {
+//   AsyncStorage.getItem("session", (err, result) => {
+//     console.log(err, result);
+//   });
+// }
 
 // USER ACTIONS
 export const REQUEST_USER = "REQUEST_USER";
@@ -52,7 +72,8 @@ export function fetchUser(userId) {
         resp => resp.json(),
         error => console.log("An error occured ", error)
       )
-      .then(json => dispatch(receiveUser(userId, json)));
+      .then(json => dispatch(receiveUser(userId, json)))
+      .catch(console.error);
   };
 }
 
@@ -78,7 +99,8 @@ export function fetchItems() {
     dispatch(requestItems());
     return fetch(`http://localhost:3000/api/v1/items`)
       .then(resp => resp.json())
-      .then(json => dispatch(receiveItems(json)));
+      .then(json => dispatch(receiveItems(json)))
+      .catch(console.error);
   };
 }
 
