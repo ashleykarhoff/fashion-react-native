@@ -2,7 +2,21 @@ import fetch from "cross-fetch";
 
 // AUTHENTICATION ACTIONS
 export const SIGNIN = "SIGNIN";
-export function signIn(signInData) {
+export function signIn(email, password, passwordConfirmation) {
+  return fetch(`http://localhost:3000/api/v1/sessions`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password,
+      passwordConfirmation: passwordConfirmation
+    })
+  })
+    .then(resp => resp.json())
+    .then(console.log);
+  // .then(item => dispatch(saveItem(item)))
   // post data to endpoint
   // send response to receiveSignInData(json)
 }

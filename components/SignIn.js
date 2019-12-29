@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, Button } from "react-native";
 import { Formik } from "formik";
 import { TextInput } from "react-native-gesture-handler";
+import { signIn } from "../redux/actions";
+import { connect } from "react-redux";
 import styles from "../assets/styles";
 
 class SignIn extends React.Component {
@@ -9,8 +11,14 @@ class SignIn extends React.Component {
     return (
       <Formik
         style={styles.container}
-        initialValues={{ email: "", password: "" }}
-        onSubmit={values => values}
+        initialValues={{ email: "", password: "", passwordConfirmation: "" }}
+        onSubmit={values =>
+          this.props.signIn(
+            values.email,
+            values.password,
+            values.passwordConfirmation
+          )
+        }
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View>
@@ -30,6 +38,14 @@ class SignIn extends React.Component {
               value={values.password}
               secureTextEntry
             />
+            <Text>Password Confirmation</Text>
+            <TextInput
+              style={{ backgroundColor: "#ededed", height: 30 }}
+              onChangeText={handleChange("passwordConfirmation")}
+              onBlur={handleBlur("passwordConfirmation")}
+              value={values.passwordConfirmation}
+              secureTextEntry
+            />
             <Button onPress={handleSubmit} title="Submit" />
           </View>
         )}
@@ -38,4 +54,10 @@ class SignIn extends React.Component {
   }
 }
 
-export default SignIn;
+function mapDispatchToProps(dispatch) {
+  return {
+    signIn: (email, password, passwordConfirmation) =>
+      dispatch(signIn(email, password, passwordConfirmation))
+  };
+}
+export default connect(null, mapDispatchToProps)(SignIn);
