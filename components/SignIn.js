@@ -1,31 +1,10 @@
 import React from "react";
-import { AsyncStorage } from "react-native";
 import { View, Text, Button } from "react-native";
 import { Formik } from "formik";
 import { TextInput } from "react-native-gesture-handler";
 import styles from "../assets/styles";
 
 class SignIn extends React.Component {
-  //   _storeData = async key => {
-  //     try {
-  //       const value = await AsyncStorage.setItem("@MySuperStore:key", key.email);
-  //       console.log(value);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //     _retrieveData = async () => {
-  //       try {
-  //         const key = await AsyncStorage.getItem("@userKey");
-  //         if (key !== null) {
-  //           this._storeData(key);
-  //         }
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     };
-
   render() {
     return (
       <Formik
