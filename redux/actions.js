@@ -1,5 +1,6 @@
 import fetch from "cross-fetch";
 
+// USER ACTIONS
 export const REQUEST_USER = "REQUEST_USER";
 export function requestUser(user) {
   return {
@@ -30,6 +31,7 @@ export function fetchUser(userId) {
   };
 }
 
+// ITEM ACTIONS
 export const REQUEST_ITEMS = "REQUEST_ITEMS";
 export function requestItems() {
   return {
@@ -145,7 +147,7 @@ export function handleDelete(itemId) {
 }
 
 // Backlog of actions to create later:
-
+// FILTER ACTIONS
 export const SET_ITEM_FILTER = "SET_ITEM_FILTER";
 export const itemFilters = {
   SHOW_ALL: "SHOW_ALL",
