@@ -1,12 +1,4 @@
 import fetch from "cross-fetch";
-// Action constants
-export const INVALIDATE_REQUEST = "INVALIDATE_REQUEST";
-export function invalidateRequest(request) {
-  return {
-    type: INVALIDATE_REQUEST,
-    request
-  };
-}
 
 export const REQUEST_USER = "REQUEST_USER";
 export function requestUser(user) {
