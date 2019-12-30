@@ -8,21 +8,15 @@ import {
   Image
 } from "react-native";
 import { connect } from "react-redux";
-import { getSavedItems } from "../redux/actions";
 import styles from "../assets/styles";
 
 class Board extends Component {
-  componentDidMount = () => {
-    this.props.getSavedItems();
-  };
-
   handleShowPage = item => {
     this.props.navigation.navigate("Show", { id: item.id });
   };
 
   render() {
-    // Bandaid fix for bug where this.props.savedItems returns the # of items in savedItems instead of an object
-    if (typeof this.props.savedItems !== "object") {
+    if (this.props.boardItems.length === 0) {
       return (
         <View>
           <Text>Nothing to see here...</Text>
@@ -33,7 +27,7 @@ class Board extends Component {
     return (
       <SafeAreaView style={styles.board}>
         <FlatList
-          data={this.props.savedItems}
+          data={this.props.boardItems}
           numColumns={2}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => this.handleShowPage(item)}>
@@ -52,13 +46,12 @@ class Board extends Component {
 
 function mapStateToProps(state) {
   return {
-    savedItems: state.savedItems.items
+    boardItems: state.savedItems.board[0].board_items
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getSavedItems: () => dispatch(getSavedItems()),
     showItem: item => dispatch(showItem(item))
   };
 }

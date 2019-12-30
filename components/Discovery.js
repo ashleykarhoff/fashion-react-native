@@ -10,12 +10,6 @@ class Discovery extends Component {
     this.props.getItems();
   };
 
-  componentDidUpdate = () => {
-    if (this.props.board) {
-      console.log(this.props.board);
-    }
-  };
-
   render() {
     // npm package has a bug that won't re-render Swiper cards
     if (!this.props.items) {
@@ -58,8 +52,7 @@ class Discovery extends Component {
 
 function mapStateToProps(state) {
   return {
-    items: state.items.allItems,
-    board: state.savedItems.board
+    items: state.items.allItems
   };
 }
 
