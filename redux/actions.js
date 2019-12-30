@@ -38,12 +38,36 @@ export function setSession(json) {
   };
 }
 
-// export const GET_SESSION = "SET_SESSION";
-// export function getSession() {
-//   AsyncStorage.getItem("session", (err, result) => {
-//     console.log(err, result);
-//   });
-// }
+export const CREATE_ACCOUNT = "CREATE_ACCOUNT";
+export function createAccount(data) {
+  return function(dispatch) {
+    return fetch(`http://localhost:3000/api/v1/users`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        first_name: data.firstName,
+        email: data.email,
+        password: data.password,
+        password_confirmation: data.password_confirmation
+      })
+    })
+      .catch(console.error)
+      .then(resp => resp.json())
+      .then(json =>
+        json.error ? dispatch(emailTaken(json.error)) : console.log("not error")
+      );
+  };
+}
+
+export const EMAIL_TAKEN = "EMAIL_TAKEN";
+export function emailTaken(message) {
+  return {
+    type: EMAIL_TAKEN,
+    payload: message
+  };
+}
 
 // USER ACTIONS
 export const REQUEST_USER = "REQUEST_USER";

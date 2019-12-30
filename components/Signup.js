@@ -1,4 +1,6 @@
 import React from "react";
+import { createAccount } from "../redux/actions";
+import { connect } from "react-redux";
 import { View, Text, Button } from "react-native";
 import { Formik } from "formik";
 import { TextInput } from "react-native-gesture-handler";
@@ -22,9 +24,22 @@ const SignupSchema = Yup.object().shape({
 });
 
 class Signup extends React.Component {
+  // componentDidMount() {
+  //   if (this.props.session) {
+  //     this.props.navigation.navigate("Home");
+  //   }
+  // }
+
+  // componentDidUpdate() {
+  //   if (this.props.session) {
+  //     this.props.navigation.navigate("Home");
+  //   }
+  // }
+
   render() {
     return (
       <Formik
+        onSubmit={data => this.props.createAccount(data)}
         validationSchema={SignupSchema}
         initialValues={{
           firstName: "",
@@ -55,6 +70,7 @@ class Signup extends React.Component {
             />
             <Text>Email</Text>
             {errors.email && touched.email ? <Text>{errors.email}</Text> : null}
+            {this.props.emailTaken ? <Text>Email is taken</Text> : null}
             <TextInput
               style={{ backgroundColor: "#ededed", height: 30 }}
               onChangeText={handleChange("email")}
@@ -91,4 +107,17 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+function mapStateToProps(state) {
+  return {
+    session: state.session.session,
+    emailTaken: state.session.emailTaken
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    createAccount: data => dispatch(createAccount(data))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

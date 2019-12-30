@@ -10,6 +10,7 @@ import {
   REMOVE_ITEM,
   RECEIVE_SAVED_ITEMS,
   SET_SESSION,
+  EMAIL_TAKEN,
   SHOW_ITEM,
   RECEIVE_SHOW_ITEM
 } from "./actions";
@@ -17,13 +18,17 @@ import { combineReducers } from "redux";
 
 function session(
   state = {
-    sessionId: undefined
+    sessionId: undefined,
+    emailTaken: false
   },
   action
 ) {
   switch (action.type) {
     case SET_SESSION:
       return { ...state, session: action.payload };
+
+    case EMAIL_TAKEN:
+      return { ...state, emailTaken: action.payload };
 
     default:
       return state;

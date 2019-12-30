@@ -13,6 +13,12 @@ const SigninSchema = Yup.object().shape({
 });
 
 class SignIn extends React.Component {
+  componentDidMount() {
+    if (this.props.session) {
+      this.props.navigation.navigate("Home");
+    }
+  }
+
   componentDidUpdate() {
     if (this.props.session) {
       this.props.navigation.navigate("Home");
