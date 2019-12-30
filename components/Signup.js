@@ -24,17 +24,11 @@ const SignupSchema = Yup.object().shape({
 });
 
 class Signup extends React.Component {
-  // componentDidMount() {
-  //   if (this.props.session) {
-  //     this.props.navigation.navigate("Home");
-  //   }
-  // }
-
-  // componentDidUpdate() {
-  //   if (this.props.session) {
-  //     this.props.navigation.navigate("Home");
-  //   }
-  // }
+  componentDidUpdate() {
+    if (this.props.session) {
+      this.props.navigation.navigate("Home");
+    }
+  }
 
   render() {
     return (

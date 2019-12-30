@@ -56,7 +56,9 @@ export function createAccount(data) {
       .catch(console.error)
       .then(resp => resp.json())
       .then(json =>
-        json.error ? dispatch(emailTaken(json.error)) : console.log("not error")
+        json.error
+          ? dispatch(emailTaken(json.error))
+          : dispatch(setSession(json.id))
       );
   };
 }
