@@ -8,7 +8,6 @@ import styles from "../assets/styles";
 
 class SignIn extends React.Component {
   componentDidUpdate() {
-    // this.props.navigation.navigate("Board")
     if (this.props.session) {
       this.props.navigation.navigate("Home");
     }

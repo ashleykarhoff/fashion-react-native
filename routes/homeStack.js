@@ -5,6 +5,7 @@ import Discovery from "../components/Discovery";
 import Board from "../components/Board";
 import Show from "../components/Show";
 import SignIn from "../components/SignIn";
+import Signup from "../components/Signup";
 // import Signup from "../components/Signup";
 // import ResetPassword from "../components/ResetPassword";
 
@@ -22,6 +23,9 @@ import SignIn from "../components/SignIn";
 // );
 
 const screens = {
+  Signup: {
+    screen: Signup
+  },
   Signin: {
     screen: SignIn
   },
