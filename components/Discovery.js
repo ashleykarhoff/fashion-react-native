@@ -8,11 +8,16 @@ import styles from "../assets/styles";
 class Discovery extends Component {
   componentDidMount = () => {
     this.props.getItems();
+    console.log(this.props.session);
   };
+
+  componentDidUpdate() {
+    console.log(this.props.session);
+  }
 
   render() {
     // npm package has a bug that won't re-render Swiper cards
-    if (!this.props.items) {
+    if (!this.props.items || !this.props.board) {
       return (
         <View>
           <Text>Loading...</Text>
@@ -35,9 +40,8 @@ class Discovery extends Component {
           }}
           onSwipedRight={cardIndex => {
             const item = this.props.items[cardIndex];
-            this.props.persistItem(item, 1); // (item, userId)
+            this.props.persistItem(item, this.props.user_id); // (item, userId)
           }}
-          // onSwipedAll={console.log("all done")}
           backgroundColor={"#4FD0E9"}
           stackSize={3}
         ></Swiper>
@@ -52,7 +56,10 @@ class Discovery extends Component {
 
 function mapStateToProps(state) {
   return {
-    items: state.items.allItems
+    items: state.items.allItems,
+    board: state.savedItems.board,
+    userId: state.session.session,
+    session: state.session.session
   };
 }
 

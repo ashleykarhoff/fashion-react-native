@@ -10,6 +10,7 @@ import {
   REMOVE_ITEM,
   RECEIVE_SAVED_ITEMS,
   SET_SESSION,
+  GET_SESSION,
   EMAIL_TAKEN,
   SAVE_BOARD,
   SHOW_ITEM,
@@ -19,7 +20,7 @@ import { combineReducers } from "redux";
 
 function session(
   state = {
-    sessionId: undefined,
+    session: undefined,
     emailTaken: false
   },
   action
@@ -27,6 +28,9 @@ function session(
   switch (action.type) {
     case SET_SESSION:
       return { ...state, session: action.payload };
+
+    // case GET_SESSION:
+    //   return { ...state, session };
 
     case EMAIL_TAKEN:
       return { ...state, emailTaken: action.payload };
@@ -114,20 +118,22 @@ function itemFilter(state = itemFilters.SHOW_ALL, action) {
 
 function savedItems(
   state = {
-    items: [],
     board: []
   },
   action
 ) {
   switch (action.type) {
     case SAVE_ITEM:
-      return { ...state, items: [...state.items, action.item] };
+      console.log(action.payload);
+      return state;
+    // filter board array for a board id that matches
+    // save item to board_items array for that board
 
-    case REMOVE_ITEM:
-      return { ...state, items: state.items.filter(i => i !== action.payload) };
+    // case REMOVE_ITEM:
+    //   return { ...state, items: state.items.filter(i => i !== action.payload) };
 
     case RECEIVE_SAVED_ITEMS:
-      return { ...state, items: action.data };
+      return { ...state, board: state.board[0].board_items };
 
     case SAVE_BOARD:
       return { ...state, board: [...state.board, action.payload] };

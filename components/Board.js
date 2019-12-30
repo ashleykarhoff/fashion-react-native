@@ -11,12 +11,20 @@ import { connect } from "react-redux";
 import styles from "../assets/styles";
 
 class Board extends Component {
+  componentDidMount() {
+    this.props.getSavedItems();
+  }
+
+  componentDidUpdate() {
+    console.log(this.props);
+  }
+
   handleShowPage = item => {
     this.props.navigation.navigate("Show", { id: item.id });
   };
 
   render() {
-    if (this.props.boardItems.length === 0) {
+    if (this.props.board === undefined) {
       return (
         <View>
           <Text>Nothing to see here...</Text>
@@ -46,13 +54,14 @@ class Board extends Component {
 
 function mapStateToProps(state) {
   return {
-    boardItems: state.savedItems.board[0].board_items
+    board: state.savedItems.board[0]
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    showItem: item => dispatch(showItem(item))
+    showItem: item => dispatch(showItem(item)),
+    getSavedItems: () => dispatch(getSavedItems())
   };
 }
 

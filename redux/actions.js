@@ -19,7 +19,10 @@ export function signIn(email, password) {
         resp => resp.json(),
         error => console.log("An error occured ", error)
       )
-      .then(json => dispatch(setSession(json)))
+      .then(json => {
+        dispatch(fetchUser(json));
+        dispatch(setSession(json));
+      })
       .catch(console.error);
   };
 }
@@ -38,38 +41,44 @@ export function setSession(json) {
   };
 }
 
+export const GET_SESSION = "GET_SESSION";
+export function getSession() {
+  return function(dispatch) {
+    AsyncStorage.getItem("session", (err, result) => {
+      dispatch({
+        type: GET_SESSION,
+        payload: result
+      });
+    });
+  };
+}
+
 export const CREATE_ACCOUNT = "CREATE_ACCOUNT";
 export function createAccount(data) {
   return function(dispatch) {
-    return (
-      fetch(`http://localhost:3000/api/v1/users`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json"
-        },
-        body: JSON.stringify({
-          first_name: data.firstName,
-          email: data.email,
-          password: data.password,
-          password_confirmation: data.password_confirmation
-        })
+    return fetch(`http://localhost:3000/api/v1/users`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        first_name: data.firstName,
+        email: data.email,
+        password: data.password,
+        password_confirmation: data.password_confirmation
       })
-        .catch(console.error)
-        .then(resp => resp.json())
-        // .then(json =>
-        //   json.error
-        //     ? dispatch(emailTaken(json.error))
-        //     : dispatch(setSession(json.id))
-        // )
-        .then(json => {
-          if (json.error) {
-            dispatch(emailTaken(json.error));
-          } else {
-            dispatch(setSession(json.id));
-            dispatch(createBoard(json.id));
-          }
-        })
-    );
+    })
+      .catch(console.error)
+      .then(resp => resp.json())
+      .then(json => {
+        if (json.error) {
+          dispatch(emailTaken(json.error));
+        } else {
+          dispatch(createBoard(json.id));
+          dispatch(setSession(json.id));
+          dispatch(fetchUser(json.id));
+        }
+      });
   };
 }
 
@@ -135,7 +144,7 @@ export function fetchUser(userId) {
         resp => resp.json(),
         error => console.log("An error occured ", error)
       )
-      .then(json => dispatch(receiveUser(userId, json)))
+      .then(user => dispatch(receiveUser(user)))
       .catch(console.error);
   };
 }
@@ -171,27 +180,25 @@ export const SAVE_ITEM = "SAVE_ITEM";
 export function saveItem(item) {
   return {
     type: SAVE_ITEM,
-    item
+    payload: item
   };
 }
 
 export function persistItem(item, userId) {
   return function(dispatch) {
-    return (
-      fetch(`http://localhost:3000/api/v1/board_items`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json"
-        },
-        body: JSON.stringify({
-          board_id: userId,
-          item_id: item.id
-        })
+    return fetch(`http://localhost:3000/api/v1/board_items`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        board_id: userId,
+        item_id: item.id
       })
-        .then(resp => resp.json())
-        // .then(console.log);
-        .then(item => dispatch(saveItem(item)))
-    );
+    })
+      .catch(console.error)
+      .then(resp => resp.json())
+      .then(item => dispatch(saveItem(item)));
   };
 }
 
