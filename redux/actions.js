@@ -41,25 +41,35 @@ export function setSession(json) {
 export const CREATE_ACCOUNT = "CREATE_ACCOUNT";
 export function createAccount(data) {
   return function(dispatch) {
-    return fetch(`http://localhost:3000/api/v1/users`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        first_name: data.firstName,
-        email: data.email,
-        password: data.password,
-        password_confirmation: data.password_confirmation
+    return (
+      fetch(`http://localhost:3000/api/v1/users`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          first_name: data.firstName,
+          email: data.email,
+          password: data.password,
+          password_confirmation: data.password_confirmation
+        })
       })
-    })
-      .catch(console.error)
-      .then(resp => resp.json())
-      .then(json =>
-        json.error
-          ? dispatch(emailTaken(json.error))
-          : dispatch(setSession(json.id))
-      );
+        .catch(console.error)
+        .then(resp => resp.json())
+        // .then(json =>
+        //   json.error
+        //     ? dispatch(emailTaken(json.error))
+        //     : dispatch(setSession(json.id))
+        // )
+        .then(json => {
+          if (json.error) {
+            dispatch(emailTaken(json.error));
+          } else {
+            dispatch(setSession(json.id));
+            dispatch(createBoard(json.id));
+          }
+        })
+    );
   };
 }
 
@@ -68,6 +78,33 @@ export function emailTaken(message) {
   return {
     type: EMAIL_TAKEN,
     payload: message
+  };
+}
+
+export const CREATE_BOARD = "CREATE_BOARD";
+export function createBoard(userId, title = "") {
+  return function(dispatch) {
+    return fetch(`http://localhost:3000/api/v1/boards`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        title: title
+      })
+    })
+      .catch(console.error)
+      .then(resp => resp.json())
+      .then(board => dispatch(saveBoard(board)));
+  };
+}
+
+export const SAVE_BOARD = "SAVE_BOARD";
+export function saveBoard(board) {
+  return {
+    type: SAVE_BOARD,
+    payload: board
   };
 }
 

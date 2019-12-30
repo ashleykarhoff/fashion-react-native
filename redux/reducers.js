@@ -11,6 +11,7 @@ import {
   RECEIVE_SAVED_ITEMS,
   SET_SESSION,
   EMAIL_TAKEN,
+  SAVE_BOARD,
   SHOW_ITEM,
   RECEIVE_SHOW_ITEM
 } from "./actions";
@@ -113,19 +114,23 @@ function itemFilter(state = itemFilters.SHOW_ALL, action) {
 
 function savedItems(
   state = {
-    items: []
+    items: [],
+    board: []
   },
   action
 ) {
   switch (action.type) {
     case SAVE_ITEM:
-      return { ...state, items: state.items.push(action.item) };
+      return { ...state, items: [...state.items, action.item] };
 
     case REMOVE_ITEM:
       return { ...state, items: state.items.filter(i => i !== action.payload) };
 
     case RECEIVE_SAVED_ITEMS:
       return { ...state, items: action.data };
+
+    case SAVE_BOARD:
+      return { ...state, board: [...state.board, action.payload] };
 
     default:
       return state;
