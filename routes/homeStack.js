@@ -1,13 +1,12 @@
 import { createStackNavigator } from "react-navigation-stack";
-import { createAppContainer } from "react-navigation";
-import { AsyncStorage } from "react-native";
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import Discovery from "../components/Discovery";
 import Board from "../components/Board";
 import Show from "../components/Show";
 import SignIn from "../components/SignIn";
 import Signup from "../components/Signup";
 
-const screens = {
+const AuthStack = createStackNavigator({
   Signup: {
     screen: Signup,
     navigationOptions: () => ({
@@ -19,7 +18,10 @@ const screens = {
     navigationOptions: () => ({
       title: `Sign in`
     })
-  },
+  }
+});
+
+const AppStack = createStackNavigator({
   Home: {
     screen: Discovery,
     navigationOptions: () => ({
@@ -35,17 +37,15 @@ const screens = {
   Show: {
     screen: Show
   }
-};
+});
 
-getMyValue = async () => {
-  try {
-    const token = await AsyncStorage.getItem("@userEmail");
-    console.log(token);
-  } catch (e) {
-    console.log(e);
+const App = createSwitchNavigator({
+  AuthStack: {
+    screen: AuthStack
+  },
+  AppStack: {
+    screen: AppStack
   }
-};
+});
 
-const HomeStack = createStackNavigator(screens);
-
-export default createAppContainer(HomeStack);
+export default createAppContainer(App);
