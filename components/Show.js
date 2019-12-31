@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, Image, Button } from "react-native";
+import { Linking } from "expo";
 import { connect } from "react-redux";
 import { fetchShowItem, handleDelete } from "../redux/actions";
 import styles from "../assets/styles";
@@ -14,6 +15,10 @@ class Show extends Component {
     this.props.handleDelete(id);
     this.props.navigation.navigate("Board");
     // this.props.navigation.navigate("Board", { deleted: true });
+  };
+
+  handlePress = () => {
+    Linking.openURL(this.props.item.product_url);
   };
 
   render() {
@@ -35,7 +40,7 @@ class Show extends Component {
           <Text>{this.props.item.brand}</Text>
           <Text>${this.props.item.price}</Text>
         </View>
-        <Button title="Purchase"></Button>
+        <Button title="Purchase" onPress={this.handlePress}></Button>
         <Button
           title="Delete"
           onPress={() => this.onDelete(this.props.boardItemId)}
