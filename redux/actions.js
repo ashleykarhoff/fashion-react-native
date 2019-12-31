@@ -280,13 +280,6 @@ export function handleDelete(itemId) {
 // Backlog of actions to create later:
 // FILTER ACTIONS
 
-export const SET_MODAL_VISIBLE = "SET_MODAL_VISIBLE";
-export function setModalVisibility() {
-  return {
-    type: SET_MODAL_VISIBLE
-  };
-}
-
 export const SET_ITEM_FILTER = "SET_ITEM_FILTER";
 export const itemFilters = {
   SHOW_ALL: "SHOW_ALL",

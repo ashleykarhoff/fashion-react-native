@@ -5,15 +5,13 @@ import {
   REQUEST_ITEMS,
   RECEIVE_ITEMS,
   itemFilters,
-  SET_ITEM_FILTER,
   SAVE_ITEM,
   RECEIVE_SAVED_ITEMS,
   SET_SESSION,
   DELETE_SESSION,
   EMAIL_TAKEN,
   SAVE_BOARD,
-  RECEIVE_SHOW_ITEM,
-  SET_MODAL_VISIBLE
+  RECEIVE_SHOW_ITEM
 } from "./actions";
 import { combineReducers } from "redux";
 
@@ -105,25 +103,6 @@ function items(
   }
 }
 
-function itemFilter(
-  state = {
-    modalVisible: false,
-    itemFilters: "SHOW_ALL"
-  },
-  action
-) {
-  switch (action.type) {
-    case SET_ITEM_FILTER:
-      return action.filter;
-
-    case SET_MODAL_VISIBLE:
-      return { ...state, modalVisible: !state.modalVisible };
-
-    default:
-      return state;
-  }
-}
-
 function board(
   state = {
     boards: [],
@@ -134,9 +113,6 @@ function board(
   switch (action.type) {
     case SAVE_ITEM:
       return { ...state, boardItems: [...state.boardItems, action.payload] };
-
-    // case REMOVE_ITEM:
-    //   return { ...state, items: state.items.filter(i => i !== action.payload) };
 
     case RECEIVE_SAVED_ITEMS:
       return { ...state, boardItems: action.payload };
@@ -168,7 +144,6 @@ const reducers = combineReducers({
   session,
   user,
   items,
-  itemFilter,
   board,
   showItem
 });

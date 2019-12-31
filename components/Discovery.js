@@ -9,7 +9,6 @@ import {
   setModalVisibility
 } from "./../redux/actions";
 import styles from "../assets/styles";
-import FilterModal from "./FilterModal";
 
 class Discovery extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -67,7 +66,6 @@ class Discovery extends Component {
     }
     return (
       <View style={styles.container}>
-        <FilterModal />
         <Swiper
           cards={items}
           renderCard={card => {
@@ -84,10 +82,6 @@ class Discovery extends Component {
           backgroundColor={"#4FD0E9"}
           stackSize={3}
         ></Swiper>
-        <Button
-          title="Filter"
-          onPress={() => this.props.setModalVisibility()}
-        ></Button>
       </View>
     );
   }
@@ -98,8 +92,7 @@ function mapStateToProps(state) {
     items: state.items.allItems,
     board: state.board.boards,
     user: state.user.user,
-    session: state.session.session,
-    modalVisible: state.itemFilter.modalVisible
+    session: state.session.session
   };
 }
 
@@ -107,8 +100,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getItems: () => dispatch(fetchItems()),
     persistItem: (item, boardId) => dispatch(persistItem(item, boardId)),
-    signOut: () => dispatch(signOut()),
-    setModalVisibility: () => dispatch(setModalVisibility())
+    signOut: () => dispatch(signOut())
   };
 }
 
