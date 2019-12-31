@@ -36,6 +36,10 @@ const styles = StyleSheet.create({
   },
   itemInfo: {
     margin: 20
+  },
+  navBoard: {
+    marginRight: 20,
+    fontSize: 16
   }
 });
 

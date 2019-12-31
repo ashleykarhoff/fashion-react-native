@@ -23,10 +23,7 @@ const AuthStack = createStackNavigator({
 
 const AppStack = createStackNavigator({
   Home: {
-    screen: Discovery,
-    navigationOptions: () => ({
-      title: `Discover`
-    })
+    screen: Discovery
   },
   Board: {
     screen: Board,

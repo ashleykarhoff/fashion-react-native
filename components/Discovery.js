@@ -6,8 +6,32 @@ import { fetchItems, persistItem, signOut } from "./../redux/actions";
 import styles from "../assets/styles";
 
 class Discovery extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state;
+    return {
+      title: "Discover",
+      headerRight: () => (
+        <Button
+          title="Board"
+          style={styles.navBoard}
+          onPress={() => navigation.navigate("Board")}
+        ></Button>
+      ),
+      headerLeft: () => (
+        <Button
+          title="Logout"
+          style={styles.navLogout}
+          onPress={() => params.signOut()}
+        ></Button>
+      )
+    };
+  };
+
   componentDidMount = () => {
     this.props.getItems();
+    this.props.navigation.setParams({
+      signOut: this.props.signOut
+    });
   };
 
   componentDidUpdate = () => {
@@ -53,15 +77,6 @@ class Discovery extends Component {
           backgroundColor={"#4FD0E9"}
           stackSize={3}
         ></Swiper>
-        <Button
-          title="Go to board"
-          onPress={() => navigation.navigate("Board")}
-        ></Button>
-        <Button
-          title="Logout"
-          // onPress={() => navigation.navigate("AuthStack")}
-          onPress={() => this.props.signOut()}
-        ></Button>
       </View>
     );
   }

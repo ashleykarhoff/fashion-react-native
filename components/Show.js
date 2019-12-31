@@ -14,7 +14,6 @@ class Show extends Component {
   onDelete = id => {
     this.props.handleDelete(id);
     this.props.navigation.navigate("Board");
-    // this.props.navigation.navigate("Board", { deleted: true });
   };
 
   handlePress = () => {
