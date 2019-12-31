@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { View, Text, Image, Button } from "react-native";
 import { connect } from "react-redux";
 import Swiper from "react-native-deck-swiper";
-import { fetchItems, persistItem, signOut } from "./../redux/actions";
+import {
+  fetchItems,
+  persistItem,
+  signOut,
+  setModalVisibility
+} from "./../redux/actions";
 import styles from "../assets/styles";
 import FilterModal from "./FilterModal";
 
@@ -62,6 +67,7 @@ class Discovery extends Component {
     }
     return (
       <View style={styles.container}>
+        <FilterModal />
         <Swiper
           cards={items}
           renderCard={card => {
@@ -80,7 +86,7 @@ class Discovery extends Component {
         ></Swiper>
         <Button
           title="Filter"
-          onPress={console.log("set modal visible to true")}
+          onPress={() => this.props.setModalVisibility()}
         ></Button>
       </View>
     );
@@ -92,7 +98,8 @@ function mapStateToProps(state) {
     items: state.items.allItems,
     board: state.board.boards,
     user: state.user.user,
-    session: state.session.session
+    session: state.session.session,
+    modalVisible: state.itemFilter.modalVisible
   };
 }
 
@@ -100,7 +107,8 @@ function mapDispatchToProps(dispatch) {
   return {
     getItems: () => dispatch(fetchItems()),
     persistItem: (item, boardId) => dispatch(persistItem(item, boardId)),
-    signOut: () => dispatch(signOut())
+    signOut: () => dispatch(signOut()),
+    setModalVisibility: () => dispatch(setModalVisibility())
   };
 }
 

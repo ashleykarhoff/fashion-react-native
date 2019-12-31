@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Modal, Text, TouchableHighlight, View, Alert } from "react-native";
+import { setModalVisibility } from "./../redux/actions";
+import { connect } from "react-redux";
 
 class FilterModal extends Component {
   render() {
@@ -8,7 +10,7 @@ class FilterModal extends Component {
         <Modal
           animationType="slide"
           transparent={false}
-          visible={true}
+          visible={this.props.modalVisible}
           onRequestClose={() => {
             Alert.alert("Modal has been closed.");
           }}
@@ -19,7 +21,7 @@ class FilterModal extends Component {
 
               <TouchableHighlight
                 onPress={() => {
-                  // set modalVisible to false
+                  this.props.setModalVisibility();
                 }}
               >
                 <Text>Hide Modal</Text>
@@ -27,17 +29,21 @@ class FilterModal extends Component {
             </View>
           </View>
         </Modal>
-
-        <TouchableHighlight
-          onPress={() => {
-            // set modal visible to true
-          }}
-        >
-          <Text>Show Modal</Text>
-        </TouchableHighlight>
       </View>
     );
   }
 }
 
-export default FilterModal;
+function mapStateToProps(state) {
+  return {
+    modalVisible: state.itemFilter.modalVisible
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setModalVisibility: () => dispatch(setModalVisibility())
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterModal);

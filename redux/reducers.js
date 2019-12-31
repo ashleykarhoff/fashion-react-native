@@ -12,7 +12,8 @@ import {
   DELETE_SESSION,
   EMAIL_TAKEN,
   SAVE_BOARD,
-  RECEIVE_SHOW_ITEM
+  RECEIVE_SHOW_ITEM,
+  SET_MODAL_VISIBLE
 } from "./actions";
 import { combineReducers } from "redux";
 
@@ -104,10 +105,19 @@ function items(
   }
 }
 
-function itemFilter(state = itemFilters.SHOW_ALL, action) {
+function itemFilter(
+  state = {
+    modalVisible: false,
+    itemFilters: "SHOW_ALL"
+  },
+  action
+) {
   switch (action.type) {
     case SET_ITEM_FILTER:
       return action.filter;
+
+    case SET_MODAL_VISIBLE:
+      return { ...state, modalVisible: !state.modalVisible };
 
     default:
       return state;
