@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Swiper from "react-native-deck-swiper";
 import { fetchItems, persistItem, signOut } from "./../redux/actions";
 import styles from "../assets/styles";
+import FilterModal from "./FilterModal";
 
 class Discovery extends Component {
   static navigationOptions = ({ navigation }) => {
