@@ -92,7 +92,7 @@ class Signup extends React.Component {
               value={values.passwordConfirmation}
               secureTextEntry
             />
-            <Button onPress={handleSubmit} title="Submit" />
+            <Button onPress={handleSubmit} title="Create Account" />
             <Button
               onPress={() => this.props.navigation.navigate("Signin")}
               title="Signin"
