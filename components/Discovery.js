@@ -8,12 +8,12 @@ import styles from "../assets/styles";
 class Discovery extends Component {
   componentDidMount = () => {
     this.props.getItems();
-    console.log(this.props.session);
+    // console.log(this.props.session);
   };
 
-  componentDidUpdate() {
-    console.log(this.props.session);
-  }
+  // componentDidUpdate() {
+  //   console.log(this.props.session);
+  // }
 
   render() {
     // npm package has a bug that won't re-render Swiper cards
@@ -40,7 +40,7 @@ class Discovery extends Component {
           }}
           onSwipedRight={cardIndex => {
             const item = this.props.items[cardIndex];
-            this.props.persistItem(item, this.props.user_id); // (item, userId)
+            this.props.persistItem(item, this.props.session); // (item, userId)
           }}
           backgroundColor={"#4FD0E9"}
           stackSize={3}

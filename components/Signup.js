@@ -94,6 +94,10 @@ class Signup extends React.Component {
               secureTextEntry
             />
             <Button onPress={handleSubmit} title="Submit" />
+            <Button
+              onPress={() => this.props.navigation.navigate("Signin")}
+              title="Signin"
+            />
           </View>
         )}
       </Formik>
