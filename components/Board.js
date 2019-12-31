@@ -21,7 +21,7 @@ class Board extends Component {
   };
 
   render() {
-    if (this.props.boardItems === []) {
+    if (this.props.boardItems === [] || this.props.boardItems === undefined) {
       return (
         <View>
           <Text>Nothing to see here...</Text>

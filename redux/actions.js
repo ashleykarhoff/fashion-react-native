@@ -20,8 +20,7 @@ export function signIn(email, password) {
         error => console.log("An error occured ", error)
       )
       .then(json => {
-        dispatch(fetchUser(json));
-        dispatch(setSession(json));
+        dispatch(fetchUser(json)).then(() => dispatch(setSession(json)));
       })
       .catch(console.error);
   };
@@ -87,9 +86,9 @@ export function createAccount(data) {
         if (json.error) {
           dispatch(emailTaken(json.error));
         } else {
-          dispatch(createBoard(json.id));
-          dispatch(setSession(json.id));
-          dispatch(fetchUser(json.id));
+          dispatch(createBoard(json.id))
+            .then(() => dispatch(fetchUser(json.id)))
+            .then(() => dispatch(setSession(json.id)));
         }
       });
   };

@@ -25,6 +25,7 @@ function session(
 ) {
   switch (action.type) {
     case SET_SESSION:
+      console.log("session set");
       return { ...state, session: action.payload };
 
     case DELETE_SESSION:
@@ -59,6 +60,7 @@ function user(
       });
 
     case RECEIVE_USER:
+      console.log("added user to state");
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
@@ -132,6 +134,7 @@ function board(
       return { ...state, boardItems: action.payload };
 
     case SAVE_BOARD:
+      console.log("board created");
       return { ...state, boards: [...state.boards, action.payload] };
 
     default:
