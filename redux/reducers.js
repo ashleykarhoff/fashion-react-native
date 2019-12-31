@@ -64,7 +64,7 @@ function user(
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        user: action.data,
+        user: action.payload,
         lastUpdated: action.receivedAt
       });
 
@@ -118,7 +118,8 @@ function itemFilter(state = itemFilters.SHOW_ALL, action) {
 
 function savedItems(
   state = {
-    board: []
+    boards: [],
+    boardItems: []
   },
   action
 ) {
@@ -133,10 +134,10 @@ function savedItems(
     //   return { ...state, items: state.items.filter(i => i !== action.payload) };
 
     case RECEIVE_SAVED_ITEMS:
-      return { ...state, board: state.board[0].board_items };
+      return { ...state, boardItems: [...state.boardItems, action.payload] };
 
     case SAVE_BOARD:
-      return { ...state, board: [...state.board, action.payload] };
+      return { ...state, boards: [...state.boards, action.payload] };
 
     default:
       return state;

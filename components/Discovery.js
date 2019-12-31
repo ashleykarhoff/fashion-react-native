@@ -8,12 +8,16 @@ import styles from "../assets/styles";
 class Discovery extends Component {
   componentDidMount = () => {
     this.props.getItems();
-    // console.log(this.props.session);
+    // if (this.props.user) {
+    //   console.log("mount", this.props.user);
+    // }
   };
 
-  // componentDidUpdate() {
-  //   console.log(this.props.session);
-  // }
+  componentDidUpdate() {
+    // if (this.props.user) {
+    //   console.log("update", this.props.user);
+    // }
+  }
 
   render() {
     // npm package has a bug that won't re-render Swiper cards
@@ -57,9 +61,10 @@ class Discovery extends Component {
 function mapStateToProps(state) {
   return {
     items: state.items.allItems,
-    board: state.savedItems.board,
+    board: state.savedItems.boards,
     userId: state.session.session,
-    session: state.session.session
+    session: state.session.session,
+    user: state.user.user
   };
 }
 

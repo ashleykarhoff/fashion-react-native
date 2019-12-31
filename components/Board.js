@@ -12,13 +12,10 @@ import { getSavedItems } from "./../redux/actions";
 import styles from "../assets/styles";
 
 class Board extends Component {
-  componentDidMount() {
-    this.props.getSavedItems();
-  }
-
-  componentDidUpdate() {
-    console.log(this.props);
-  }
+  componentDidMount = () => {
+    const userObj = this.props.user;
+    userObj.boards ? this.props.getSavedItems(userObj.boards[0].id) : null;
+  };
 
   handleShowPage = item => {
     this.props.navigation.navigate("Show", { id: item.id });
@@ -55,7 +52,8 @@ class Board extends Component {
 
 function mapStateToProps(state) {
   return {
-    board: state.savedItems.board[0]
+    // boardId: state.user.boards[0].id,
+    user: state.user.user
   };
 }
 

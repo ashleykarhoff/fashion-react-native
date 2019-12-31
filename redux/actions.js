@@ -29,6 +29,7 @@ export function signIn(email, password) {
 
 export const SET_SESSION = "SET_SESSION";
 export function setSession(json) {
+  // console.log("setting session: ", json);
   return function(dispatch) {
     AsyncStorage.setItem("session", JSON.stringify({ session: json }), () => {
       AsyncStorage.getItem("session", (err, result) => {
@@ -127,11 +128,11 @@ export function requestUser(user) {
 }
 
 export const RECEIVE_USER = "RECEIVE_USER";
-export function receiveUser(user, json) {
+export function receiveUser(user) {
+  // console.log("receiving user: ", user);
   return {
     type: RECEIVE_USER,
-    user,
-    data: json,
+    payload: user,
     receivedAt: Date.now()
   };
 }
@@ -203,19 +204,19 @@ export function persistItem(item, userId) {
 }
 
 export const RECEIVE_SAVED_ITEMS = "RECEIVE_SAVED_ITEMS";
-export function receiveSavedItems(json) {
+export function receiveSavedItems(items) {
   return {
     type: RECEIVE_SAVED_ITEMS,
-    data: json,
+    payload: items,
     receivedAt: Date.now()
   };
 }
-export function getSavedItems() {
+export function getSavedItems(boardId) {
   return function(dispatch) {
     return fetch(`http://localhost:3000/api/v1/board_items`)
       .then(resp => resp.json())
-      .then(items => items.filter(item => item.board_id === 1))
-      .then(json => dispatch(receiveSavedItems(json)));
+      .then(json => json.filter(item => item.board_id === boardId))
+      .then(items => dispatch(receiveSavedItems(items)));
   };
 }
 
