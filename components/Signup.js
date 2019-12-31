@@ -51,7 +51,6 @@ class Signup extends React.Component {
           touched
         }) => (
           <View>
-            <Text>Create Account</Text>
             <Text>First Name</Text>
             {errors.firstName && touched.firstName ? (
               <Text>{errors.firstName}</Text>

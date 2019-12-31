@@ -42,7 +42,6 @@ class SignIn extends React.Component {
           touched
         }) => (
           <View>
-            <Text>Signin</Text>
             <Text>Email</Text>
             {errors.email && touched.email ? <Text>{errors.email}</Text> : null}
             <TextInput

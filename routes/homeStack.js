@@ -9,16 +9,28 @@ import Signup from "../components/Signup";
 
 const screens = {
   Signup: {
-    screen: Signup
+    screen: Signup,
+    navigationOptions: () => ({
+      title: `Create Account`
+    })
   },
   Signin: {
-    screen: SignIn
+    screen: SignIn,
+    navigationOptions: () => ({
+      title: `Sign in`
+    })
   },
   Home: {
-    screen: Discovery
+    screen: Discovery,
+    navigationOptions: () => ({
+      title: `Discover`
+    })
   },
   Board: {
-    screen: Board
+    screen: Board,
+    navigationOptions: () => ({
+      title: `Board`
+    })
   },
   Show: {
     screen: Show
