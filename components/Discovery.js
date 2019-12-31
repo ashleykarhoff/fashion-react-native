@@ -8,16 +8,16 @@ import styles from "../assets/styles";
 class Discovery extends Component {
   componentDidMount = () => {
     this.props.getItems();
-    // if (this.props.user) {
-    //   console.log("mount", this.props.user);
-    // }
   };
 
-  componentDidUpdate() {
-    // if (this.props.user) {
-    //   console.log("update", this.props.user);
-    // }
-  }
+  handleSwipeRight = cardIndex => {
+    const itemObj = this.props.items[cardIndex];
+    const userObj = this.props.user;
+
+    userObj.boards
+      ? this.props.persistItem(itemObj, userObj.boards[0].id) // item object and board id
+      : null;
+  };
 
   render() {
     // npm package has a bug that won't re-render Swiper cards
@@ -42,10 +42,7 @@ class Discovery extends Component {
               </View>
             );
           }}
-          onSwipedRight={cardIndex => {
-            const item = this.props.items[cardIndex];
-            this.props.persistItem(item, this.props.session); // (item, userId)
-          }}
+          onSwipedRight={this.handleSwipeRight}
           backgroundColor={"#4FD0E9"}
           stackSize={3}
         ></Swiper>

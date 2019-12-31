@@ -185,7 +185,7 @@ export function saveItem(item) {
   };
 }
 
-export function persistItem(item, userId) {
+export function persistItem(item, boardId) {
   return function(dispatch) {
     return fetch(`http://localhost:3000/api/v1/board_items`, {
       method: "POST",
@@ -193,7 +193,7 @@ export function persistItem(item, userId) {
         "content-type": "application/json"
       },
       body: JSON.stringify({
-        board_id: userId,
+        board_id: boardId,
         item_id: item.id
       })
     })
@@ -216,7 +216,12 @@ export function getSavedItems(boardId) {
     return fetch(`http://localhost:3000/api/v1/board_items`)
       .then(resp => resp.json())
       .then(json => json.filter(item => item.board_id === boardId))
-      .then(items => dispatch(receiveSavedItems(items)));
+      .then(items => dispatch(receiveSavedItems(items)))
+      .catch(console.error);
+    // .then(json =>
+    //   json.filter(item => console.log("new", item.board_id, boardId))
+    // )
+    // .then(console.log)
   };
 }
 

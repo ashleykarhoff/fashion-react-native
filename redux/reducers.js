@@ -126,7 +126,7 @@ function savedItems(
   switch (action.type) {
     case SAVE_ITEM:
       console.log(action.payload);
-      return state;
+      return { ...state, boardItems: [...state.boardItems, action.payload] };
     // filter board array for a board id that matches
     // save item to board_items array for that board
 
@@ -134,7 +134,9 @@ function savedItems(
     //   return { ...state, items: state.items.filter(i => i !== action.payload) };
 
     case RECEIVE_SAVED_ITEMS:
-      return { ...state, boardItems: [...state.boardItems, action.payload] };
+      // console.log(action.payload);
+      // return { ...state, boardItems: [...state.boardItems, action.payload] };
+      return { ...state, boardItems: action.payload };
 
     case SAVE_BOARD:
       return { ...state, boards: [...state.boards, action.payload] };

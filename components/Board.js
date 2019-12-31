@@ -12,17 +12,18 @@ import { getSavedItems } from "./../redux/actions";
 import styles from "../assets/styles";
 
 class Board extends Component {
-  componentDidMount = () => {
-    const userObj = this.props.user;
-    userObj.boards ? this.props.getSavedItems(userObj.boards[0].id) : null;
-  };
+  componentDidMount() {
+    this.props.user ? this.props.getSavedItems(this.props.boardId) : null;
+  }
+
+  componentDidUpdate = () => {};
 
   handleShowPage = item => {
     this.props.navigation.navigate("Show", { id: item.id });
   };
 
   render() {
-    if (this.props.board === undefined) {
+    if (this.props.boardItems === []) {
       return (
         <View>
           <Text>Nothing to see here...</Text>
@@ -53,14 +54,16 @@ class Board extends Component {
 function mapStateToProps(state) {
   return {
     // boardId: state.user.boards[0].id,
-    user: state.user.user
+    user: state.user.user,
+    boardItems: state.savedItems.boardItems,
+    boardId: state.user.user.boards[0].id
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     showItem: item => dispatch(showItem(item)),
-    getSavedItems: () => dispatch(getSavedItems())
+    getSavedItems: boardId => dispatch(getSavedItems(boardId))
   };
 }
 
