@@ -16,8 +16,6 @@ class Board extends Component {
     this.props.user ? this.props.getSavedItems(this.props.boardId) : null;
   }
 
-  componentDidUpdate = () => {};
-
   handleShowPage = item => {
     this.props.navigation.navigate("Show", { id: item.id });
   };
@@ -53,7 +51,6 @@ class Board extends Component {
 
 function mapStateToProps(state) {
   return {
-    // boardId: state.user.boards[0].id,
     user: state.user.user,
     boardItems: state.savedItems.boardItems,
     boardId: state.user.user.boards[0].id
@@ -62,7 +59,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    showItem: item => dispatch(showItem(item)),
     getSavedItems: boardId => dispatch(getSavedItems(boardId))
   };
 }
