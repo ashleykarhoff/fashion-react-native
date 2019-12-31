@@ -78,6 +78,10 @@ class Discovery extends Component {
           backgroundColor={"#4FD0E9"}
           stackSize={3}
         ></Swiper>
+        <Button
+          title="Filter"
+          onPress={console.log("set modal visible to true")}
+        ></Button>
       </View>
     );
   }
