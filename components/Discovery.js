@@ -20,8 +20,9 @@ class Discovery extends Component {
   };
 
   render() {
+    const { items, navigation, board } = this.props;
     // npm package has a bug that won't re-render Swiper cards
-    if (!this.props.items || !this.props.board) {
+    if (!items || !board) {
       return (
         <View>
           <Text>Loading...</Text>
@@ -31,7 +32,7 @@ class Discovery extends Component {
     return (
       <View style={styles.container}>
         <Swiper
-          cards={this.props.items}
+          cards={items}
           renderCard={card => {
             return (
               <View style={styles.image}>
@@ -48,7 +49,7 @@ class Discovery extends Component {
         ></Swiper>
         <Button
           title="Go to board"
-          onPress={() => this.props.navigation.navigate("Board")}
+          onPress={() => navigation.navigate("Board")}
         ></Button>
       </View>
     );
@@ -59,8 +60,6 @@ function mapStateToProps(state) {
   return {
     items: state.items.allItems,
     board: state.savedItems.boards,
-    userId: state.session.session,
-    session: state.session.session,
     user: state.user.user
   };
 }
@@ -68,7 +67,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getItems: () => dispatch(fetchItems()),
-    persistItem: (item, userId) => dispatch(persistItem(item, userId))
+    persistItem: (item, boardId) => dispatch(persistItem(item, boardId))
   };
 }
 
