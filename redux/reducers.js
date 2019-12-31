@@ -116,7 +116,7 @@ function itemFilter(state = itemFilters.SHOW_ALL, action) {
   }
 }
 
-function savedItems(
+function board(
   state = {
     boards: [],
     boardItems: []
@@ -125,17 +125,12 @@ function savedItems(
 ) {
   switch (action.type) {
     case SAVE_ITEM:
-      console.log(action.payload);
       return { ...state, boardItems: [...state.boardItems, action.payload] };
-    // filter board array for a board id that matches
-    // save item to board_items array for that board
 
     // case REMOVE_ITEM:
     //   return { ...state, items: state.items.filter(i => i !== action.payload) };
 
     case RECEIVE_SAVED_ITEMS:
-      // console.log(action.payload);
-      // return { ...state, boardItems: [...state.boardItems, action.payload] };
       return { ...state, boardItems: action.payload };
 
     case SAVE_BOARD:
@@ -166,7 +161,7 @@ const reducers = combineReducers({
   user,
   items,
   itemFilter,
-  savedItems,
+  board,
   showItem
 });
 

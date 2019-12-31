@@ -52,7 +52,7 @@ class Board extends Component {
 function mapStateToProps(state) {
   return {
     user: state.user.user,
-    boardItems: state.savedItems.boardItems,
+    boardItems: state.board.boardItems,
     boardId: state.user.user.boards[0].id
   };
 }

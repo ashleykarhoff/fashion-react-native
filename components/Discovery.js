@@ -59,7 +59,7 @@ class Discovery extends Component {
 function mapStateToProps(state) {
   return {
     items: state.items.allItems,
-    board: state.savedItems.boards,
+    board: state.board.boards,
     user: state.user.user
   };
 }

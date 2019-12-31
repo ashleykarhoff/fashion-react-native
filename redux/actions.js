@@ -129,7 +129,6 @@ export function requestUser(user) {
 
 export const RECEIVE_USER = "RECEIVE_USER";
 export function receiveUser(user) {
-  // console.log("receiving user: ", user);
   return {
     type: RECEIVE_USER,
     payload: user,
@@ -218,10 +217,6 @@ export function getSavedItems(boardId) {
       .then(json => json.filter(item => item.board_id === boardId))
       .then(items => dispatch(receiveSavedItems(items)))
       .catch(console.error);
-    // .then(json =>
-    //   json.filter(item => console.log("new", item.board_id, boardId))
-    // )
-    // .then(console.log)
   };
 }
 
@@ -247,7 +242,8 @@ export function fetchShowItem(itemId) {
     dispatch(showItem(itemId));
     return fetch(`http://localhost:3000/api/v1/board_items/${itemId}`)
       .then(resp => resp.json())
-      .then(json => dispatch(receiveShowItem(json)));
+      .then(json => dispatch(receiveShowItem(json)))
+      .catch(console.error);
   };
 }
 
@@ -265,7 +261,8 @@ export function handleDelete(itemId) {
       method: "DELETE"
     })
       .then(resp => resp.json())
-      .then(item => dispatch(removeItem(item)));
+      .then(item => dispatch(removeItem(item)))
+      .catch(console.error);
   };
 }
 
