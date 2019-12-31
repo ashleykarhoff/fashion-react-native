@@ -16,6 +16,13 @@ class Board extends Component {
     this.props.user ? this.props.getSavedItems(this.props.boardId) : null;
   }
 
+  componentDidUpdate(prevProps) {
+    // Trigger a re-render to remove deleted item from board
+    this.props !== prevProps
+      ? this.props.getSavedItems(this.props.boardId)
+      : null;
+  }
+
   handleShowPage = item => {
     this.props.navigation.navigate("Show", { id: item.id });
   };
