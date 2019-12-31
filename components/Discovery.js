@@ -2,12 +2,18 @@ import React, { Component } from "react";
 import { View, Text, Image, Button } from "react-native";
 import { connect } from "react-redux";
 import Swiper from "react-native-deck-swiper";
-import { fetchItems, persistItem } from "./../redux/actions";
+import { fetchItems, persistItem, signOut } from "./../redux/actions";
 import styles from "../assets/styles";
 
 class Discovery extends Component {
   componentDidMount = () => {
     this.props.getItems();
+  };
+
+  componentDidUpdate = () => {
+    this.props.session === undefined
+      ? this.props.navigation.navigate("AuthStack")
+      : null;
   };
 
   handleSwipeRight = cardIndex => {
@@ -51,6 +57,11 @@ class Discovery extends Component {
           title="Go to board"
           onPress={() => navigation.navigate("Board")}
         ></Button>
+        <Button
+          title="Logout"
+          // onPress={() => navigation.navigate("AuthStack")}
+          onPress={() => this.props.signOut()}
+        ></Button>
       </View>
     );
   }
@@ -60,14 +71,16 @@ function mapStateToProps(state) {
   return {
     items: state.items.allItems,
     board: state.board.boards,
-    user: state.user.user
+    user: state.user.user,
+    session: state.session.session
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getItems: () => dispatch(fetchItems()),
-    persistItem: (item, boardId) => dispatch(persistItem(item, boardId))
+    persistItem: (item, boardId) => dispatch(persistItem(item, boardId)),
+    signOut: () => dispatch(signOut())
   };
 }
 

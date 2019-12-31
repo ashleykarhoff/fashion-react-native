@@ -9,6 +9,7 @@ import {
   SAVE_ITEM,
   RECEIVE_SAVED_ITEMS,
   SET_SESSION,
+  DELETE_SESSION,
   EMAIL_TAKEN,
   SAVE_BOARD,
   RECEIVE_SHOW_ITEM
@@ -25,6 +26,9 @@ function session(
   switch (action.type) {
     case SET_SESSION:
       return { ...state, session: action.payload };
+
+    case DELETE_SESSION:
+      return { ...state, session: undefined };
 
     case EMAIL_TAKEN:
       return { ...state, emailTaken: action.payload };

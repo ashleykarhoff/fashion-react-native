@@ -27,6 +27,18 @@ export function signIn(email, password) {
   };
 }
 
+export const DELETE_SESSION = "DELETE_SESSION";
+export function signOut() {
+  return function(dispatch) {
+    AsyncStorage.removeItem("session", (err, result) => {
+      dispatch({
+        type: DELETE_SESSION,
+        payload: result
+      });
+    });
+  };
+}
+
 export const SET_SESSION = "SET_SESSION";
 export function setSession(json) {
   // console.log("setting session: ", json);
