@@ -7,13 +7,10 @@ import {
   itemFilters,
   SET_ITEM_FILTER,
   SAVE_ITEM,
-  REMOVE_ITEM,
   RECEIVE_SAVED_ITEMS,
   SET_SESSION,
-  GET_SESSION,
   EMAIL_TAKEN,
   SAVE_BOARD,
-  SHOW_ITEM,
   RECEIVE_SHOW_ITEM
 } from "./actions";
 import { combineReducers } from "redux";
@@ -28,9 +25,6 @@ function session(
   switch (action.type) {
     case SET_SESSION:
       return { ...state, session: action.payload };
-
-    // case GET_SESSION:
-    //   return { ...state, session };
 
     case EMAIL_TAKEN:
       return { ...state, emailTaken: action.payload };
