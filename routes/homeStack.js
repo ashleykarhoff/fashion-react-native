@@ -5,18 +5,22 @@ import Board from "../components/Board";
 import Show from "../components/Show";
 import SignIn from "../components/SignIn";
 import Signup from "../components/Signup";
+import { styles } from "../assets/styles";
 
-const AuthStack = createStackNavigator({
-  Signup: {
-    screen: Signup,
-    navigationOptions: () => ({
-      title: `Create Account`
-    })
-  },
+const SignInStack = createStackNavigator({
   Signin: {
     screen: SignIn,
     navigationOptions: () => ({
-      title: `Sign in`
+      headerStyle: styles.formNav
+    })
+  }
+});
+
+const SignUpStack = createStackNavigator({
+  Signup: {
+    screen: Signup,
+    navigationOptions: () => ({
+      headerStyle: styles.formNav
     })
   }
 });
@@ -37,8 +41,11 @@ const AppStack = createStackNavigator({
 });
 
 const App = createSwitchNavigator({
-  AuthStack: {
-    screen: AuthStack
+  SignInStack: {
+    screen: SignInStack
+  },
+  SignUpStack: {
+    screen: SignUpStack
   },
   AppStack: {
     screen: AppStack

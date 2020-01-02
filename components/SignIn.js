@@ -1,16 +1,11 @@
 import React from "react";
 import { View, Text, Button } from "react-native";
 import { Formik } from "formik";
-import * as Yup from "yup";
-import { TextInput } from "react-native-gesture-handler";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { signIn, setSession } from "../redux/actions";
 import { connect } from "react-redux";
-import styles from "../assets/styles";
-
-const SigninSchema = Yup.object().shape({
-  email: Yup.string().required("Required"),
-  password: Yup.string().required("Required")
-});
+import { styles, colors } from "../assets/styles";
+import { SigninSchema } from "../validations/validation";
 
 class SignIn extends React.Component {
   componentDidMount() {
@@ -42,26 +37,58 @@ class SignIn extends React.Component {
           touched
         }) => (
           <View>
-            <Text>Email</Text>
-            {errors.email && touched.email ? <Text>{errors.email}</Text> : null}
-            <TextInput
-              style={{ backgroundColor: "#ededed", height: 30 }}
-              onChangeText={handleChange("email")}
-              onBlur={handleBlur("email")}
-              value={values.email}
-            />
-            <Text>Password</Text>
-            {errors.password && touched.password ? (
-              <Text>{errors.password}</Text>
-            ) : null}
-            <TextInput
-              style={{ backgroundColor: "#ededed", height: 30 }}
-              onChangeText={handleChange("password")}
-              onBlur={handleBlur("password")}
-              value={values.password}
-              secureTextEntry
-            />
-            <Button onPress={handleSubmit} title="Submit" />
+            <View style={styles.formHeaderContainer}>
+              <Text style={styles.formHeader}>Sign in</Text>
+            </View>
+            <View style={styles.formContainer}>
+              <View>
+                <View style={styles.formTextContainer}>
+                  {errors.email && touched.email ? (
+                    <Text style={styles.formTextError}> * {errors.email}</Text>
+                  ) : null}
+                  <TextInput
+                    style={styles.formTextInput}
+                    onChangeText={handleChange("email")}
+                    onBlur={handleBlur("email")}
+                    value={values.email}
+                    placeholder="Email"
+                    placeholderTextColor={colors.grey}
+                  />
+                </View>
+                <View style={styles.formTextContainer}>
+                  {errors.password && touched.password ? (
+                    <Text style={styles.formTextError}>
+                      {" "}
+                      * {errors.password}
+                    </Text>
+                  ) : null}
+                  <TextInput
+                    style={styles.formTextInput}
+                    onChangeText={handleChange("password")}
+                    onBlur={handleBlur("password")}
+                    value={values.password}
+                    placeholder="Password"
+                    placeholderTextColor={colors.grey}
+                    secureTextEntry
+                  />
+                </View>
+                {/* <Button onPress={handleSubmit} title="Submit" /> */}
+                <TouchableOpacity
+                  style={styles.formPrimaryBtn}
+                  onPress={handleSubmit}
+                >
+                  <Text style={styles.formPrimaryBtnText}>Sign in</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.formSecondaryBtn}
+                  onPress={() => this.props.navigation.navigate("Signup")}
+                >
+                  <Text style={styles.formSecondaryBtnText}>
+                    Create new account
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
         )}
       </Formik>
