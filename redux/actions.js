@@ -1,30 +1,33 @@
 import fetch from "cross-fetch";
 import { AsyncStorage } from "react-native";
 
-const url = "http://192.168.1.233:3000/api/v1/";
+const url = "http://10.9.111.89:3000/api/v1/";
 
 // AUTHENTICATION ACTIONS
 export const SIGNIN = "SIGNIN";
 export function signIn(email, password) {
   return function(dispatch) {
-    return fetch(`${url}sessions`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password
+    return (
+      fetch(`${url}sessions`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
       })
-    })
-      .then(
-        resp => resp.json(),
-        error => console.log("An error occured ", error)
-      )
-      .then(json => {
-        dispatch(fetchUser(json)).then(() => dispatch(setSession(json)));
-      })
-      .catch(console.error);
+        .then(
+          resp => resp.json(),
+          error => console.log("An error occured ", error)
+        )
+        // .then(console.log)
+        .then(json => {
+          dispatch(fetchUser(json)).then(() => dispatch(setSession(json)));
+        })
+        .catch(console.error)
+    );
   };
 }
 
