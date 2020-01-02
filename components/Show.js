@@ -4,8 +4,23 @@ import { Linking } from "expo";
 import { connect } from "react-redux";
 import { fetchShowItem, handleDelete } from "../redux/actions";
 import { styles } from "../assets/styles";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 class Show extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state;
+    return {
+      headerLeft: () => (
+        <TouchableOpacity
+          style={styles.leftIcon}
+          onPress={() => navigation.navigate("Board")}
+        >
+          <Image source={require("../assets/images/back.png")} />
+        </TouchableOpacity>
+      )
+    };
+  };
+
   componentDidMount = () => {
     const itemId = this.props.navigation.getParam("id");
     this.props.fetchShowItem(itemId);
@@ -39,6 +54,12 @@ class Show extends Component {
           <Text>{this.props.item.brand}</Text>
           <Text>${this.props.item.price}</Text>
         </View>
+        {/* <TouchableOpacity>
+          <Text>Purchase</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text>Delete</Text>
+        </TouchableOpacity> */}
         <Button title="Purchase" onPress={this.handlePress}></Button>
         <Button
           title="Delete"

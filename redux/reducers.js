@@ -4,12 +4,13 @@ import {
   RECEIVE_USER,
   REQUEST_ITEMS,
   RECEIVE_ITEMS,
-  itemFilters,
   SAVE_ITEM,
   RECEIVE_SAVED_ITEMS,
   SET_SESSION,
   DELETE_SESSION,
   EMAIL_TAKEN,
+  SIGNIN_ERROR,
+  PASSWORD_ERROR,
   SAVE_BOARD,
   RECEIVE_SHOW_ITEM
 } from "./actions";
@@ -18,7 +19,9 @@ import { combineReducers } from "redux";
 function session(
   state = {
     session: undefined,
-    emailTaken: false
+    emailTaken: false,
+    signInError: false,
+    passwordError: false
   },
   action
 ) {
@@ -31,6 +34,12 @@ function session(
 
     case EMAIL_TAKEN:
       return { ...state, emailTaken: action.payload };
+
+    case SIGNIN_ERROR:
+      return { ...state, signInError: action.payload };
+
+    case PASSWORD_ERROR:
+      return { ...state, passwordError: action.payload };
 
     default:
       return state;

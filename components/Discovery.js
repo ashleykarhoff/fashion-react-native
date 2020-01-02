@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, Button } from "react-native";
+import { View, Text, Image, Button, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import Swiper from "react-native-deck-swiper";
 import {
@@ -8,7 +8,7 @@ import {
   signOut,
   setModalVisibility
 } from "./../redux/actions";
-import { styles } from "../assets/styles";
+import { styles, colors } from "../assets/styles";
 
 class Discovery extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -16,18 +16,20 @@ class Discovery extends Component {
     return {
       title: "Discover",
       headerRight: () => (
-        <Button
-          title="Board"
-          style={styles.navBoard}
+        <TouchableOpacity
+          style={styles.boardIcon}
           onPress={() => navigation.navigate("Board")}
-        ></Button>
+        >
+          <Image source={require("../assets/images/board.png")} />
+        </TouchableOpacity>
       ),
       headerLeft: () => (
-        <Button
-          title="Logout"
-          style={styles.navLogout}
+        <TouchableOpacity
+          style={styles.leftIcon}
           onPress={() => params.signOut()}
-        ></Button>
+        >
+          <Image source={require("../assets/images/log-out.png")} />
+        </TouchableOpacity>
       )
     };
   };

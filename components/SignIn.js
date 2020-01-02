@@ -43,6 +43,12 @@ class SignIn extends React.Component {
             <View style={styles.formContainer}>
               <View>
                 <View style={styles.formTextContainer}>
+                  {this.props.signInError ? (
+                    <Text style={styles.formTextError}>
+                      {" "}
+                      * Email and password do not match
+                    </Text>
+                  ) : null}
                   {errors.email && touched.email ? (
                     <Text style={styles.formTextError}> * {errors.email}</Text>
                   ) : null}
@@ -52,7 +58,7 @@ class SignIn extends React.Component {
                     onBlur={handleBlur("email")}
                     value={values.email}
                     placeholder="Email"
-                    placeholderTextColor={colors.grey}
+                    placeholderTextColor={colors.navy}
                   />
                 </View>
                 <View style={styles.formTextContainer}>
@@ -68,11 +74,10 @@ class SignIn extends React.Component {
                     onBlur={handleBlur("password")}
                     value={values.password}
                     placeholder="Password"
-                    placeholderTextColor={colors.grey}
+                    placeholderTextColor={colors.navy}
                     secureTextEntry
                   />
                 </View>
-                {/* <Button onPress={handleSubmit} title="Submit" /> */}
                 <TouchableOpacity
                   style={styles.formPrimaryBtn}
                   onPress={handleSubmit}
@@ -98,7 +103,8 @@ class SignIn extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    session: state.session.session
+    session: state.session.session,
+    signInError: state.session.signInError
   };
 }
 

@@ -1,17 +1,25 @@
 import React, { Component } from "react";
-import {
-  SafeAreaView,
-  TouchableOpacity,
-  FlatList,
-  View,
-  Text,
-  Image
-} from "react-native";
+import { SafeAreaView, FlatList, View, Text, Image } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { getSavedItems } from "./../redux/actions";
 import { styles } from "../assets/styles";
 
 class Board extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state;
+    return {
+      headerLeft: () => (
+        <TouchableOpacity
+          style={styles.leftIcon}
+          onPress={() => navigation.navigate("Home")}
+        >
+          <Image source={require("../assets/images/back.png")} />
+        </TouchableOpacity>
+      )
+    };
+  };
+
   componentDidMount() {
     this.props.user ? this.props.getSavedItems(this.props.boardId) : null;
   }
@@ -28,10 +36,17 @@ class Board extends Component {
   };
 
   render() {
-    if (this.props.boardItems === [] || this.props.boardItems === undefined) {
+    if (this.props.boardItems.length === 0) {
       return (
-        <View>
-          <Text>Nothing to see here...</Text>
+        <View style={styles.emptyBoard}>
+          <Text style={styles.emptyBoardHeader}>Your board is empty!</Text>
+          <Image
+            style={styles.emptyBoardEmoji}
+            source={require("../assets/images/frown.png")}
+          />
+          <Text style={styles.emptyBoardContent}>
+            Return to the Discover page to start saving items.
+          </Text>
         </View>
       );
     }

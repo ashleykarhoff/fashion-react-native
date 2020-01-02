@@ -1,3 +1,5 @@
+import React from "react";
+import { Image } from "react-native";
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import Discovery from "../components/Discovery";
@@ -5,7 +7,7 @@ import Board from "../components/Board";
 import Show from "../components/Show";
 import SignIn from "../components/SignIn";
 import Signup from "../components/Signup";
-import { styles } from "../assets/styles";
+import { styles, colors } from "../assets/styles";
 
 const AuthStack = createStackNavigator({
   Signin: {
@@ -24,16 +26,31 @@ const AuthStack = createStackNavigator({
 
 const AppStack = createStackNavigator({
   Home: {
-    screen: Discovery
+    screen: Discovery,
+    navigationOptions: () => ({
+      headerStyle: {
+        backgroundColor: colors.navy
+      },
+      headerTintColor: colors.white
+    })
   },
   Board: {
     screen: Board,
     navigationOptions: () => ({
-      title: `Board`
+      title: `Board`,
+      headerStyle: {
+        backgroundColor: colors.navy
+      },
+      headerTintColor: colors.white
     })
   },
   Show: {
-    screen: Show
+    screen: Show,
+    navigationOptions: () => ({
+      headerStyle: {
+        backgroundColor: colors.navy
+      }
+    })
   }
 });
 

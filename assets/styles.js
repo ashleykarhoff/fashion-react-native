@@ -5,11 +5,18 @@ export const colors = {
   grey: "#505050",
   red: "#cc0000",
   orange: "#ff7433",
-  lightOrange: "#ffeee6"
+  lightOrange: "#ffeee6",
+  peach: "#f8b195",
+  pink: "#f67280",
+  pinkPurple: "#c06c84",
+  purple: "6c5b78",
+  navy: "#355c7d"
 };
 
 export const styles = StyleSheet.create({
-  container: {},
+  // container: {
+  //   backgroundColor: colors.peach
+  // },
   card: {
     flex: 0.75,
     borderRadius: 4,
@@ -47,7 +54,7 @@ export const styles = StyleSheet.create({
     fontSize: 16
   },
   formNav: {
-    backgroundColor: colors.orange,
+    backgroundColor: colors.navy,
     borderBottomWidth: 0
   },
   formContainer: {
@@ -57,7 +64,7 @@ export const styles = StyleSheet.create({
   },
   formHeaderContainer: {
     height: 80,
-    backgroundColor: colors.orange,
+    backgroundColor: colors.navy,
     alignItems: "center",
     justifyContent: "flex-end"
   },
@@ -71,12 +78,13 @@ export const styles = StyleSheet.create({
     marginTop: 20
   },
   formTextInput: {
-    borderColor: colors.grey,
+    borderColor: colors.navy,
     borderWidth: 0.5,
     borderRadius: 25,
     height: 40,
     paddingLeft: 15,
     fontSize: 16,
+    color: colors.navy,
     fontWeight: "400",
     letterSpacing: 0.5
   },
@@ -91,7 +99,7 @@ export const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.orange
+    backgroundColor: colors.pink
   },
   formPrimaryBtnText: {
     fontSize: 16,
@@ -103,9 +111,9 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 25,
     marginRight: 25,
-    backgroundColor: colors.lightOrange,
+    backgroundColor: colors.white,
     height: 40,
-    borderColor: colors.orange,
+    borderColor: colors.pink,
     borderWidth: 1,
     borderRadius: 25,
     alignItems: "center",
@@ -114,7 +122,31 @@ export const styles = StyleSheet.create({
   formSecondaryBtnText: {
     fontSize: 16,
     fontWeight: "500",
-    color: colors.orange,
+    color: colors.pink,
     letterSpacing: 0.5
+  },
+  leftIcon: {
+    paddingLeft: 20
+  },
+  boardIcon: {
+    paddingRight: 20
+  },
+  emptyBoard: {
+    marginTop: 50,
+    marginLeft: 65,
+    marginRight: 65,
+    alignItems: "center"
+  },
+  emptyBoardHeader: {
+    fontSize: 24,
+    fontWeight: "500"
+  },
+  emptyBoardEmoji: {
+    marginTop: 20
+  },
+  emptyBoardContent: {
+    marginTop: 20,
+    fontSize: 18,
+    textAlign: "center"
   }
 });

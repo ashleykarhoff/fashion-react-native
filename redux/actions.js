@@ -7,27 +7,25 @@ const url = "http://10.9.111.89:3000/api/v1/";
 export const SIGNIN = "SIGNIN";
 export function signIn(email, password) {
   return function(dispatch) {
-    return (
-      fetch(`${url}sessions`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json"
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
+    return fetch(`${url}sessions`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
       })
-        .then(
-          resp => resp.json(),
-          error => console.log("An error occured ", error)
-        )
-        // .then(console.log)
-        .then(json => {
+    })
+      .then(resp => resp.json())
+      .then(json => {
+        if (json.error === "Email and password do not match") {
+          dispatch(signInError(json.error));
+        } else {
           dispatch(fetchUser(json)).then(() => dispatch(setSession(json)));
-        })
-        .catch(console.error)
-    );
+        }
+      })
+      .catch(console.error);
   };
 }
 
@@ -70,6 +68,14 @@ export function getSession() {
   };
 }
 
+export const PASSWORD_ERROR = "PASSWORD_ERROR";
+export function passwordError() {
+  return {
+    type: PASSWORD_ERROR,
+    payload: true
+  };
+}
+
 export const CREATE_ACCOUNT = "CREATE_ACCOUNT";
 export function createAccount(data) {
   return function(dispatch) {
@@ -104,6 +110,14 @@ export function emailTaken(message) {
   return {
     type: EMAIL_TAKEN,
     payload: message
+  };
+}
+
+export const SIGNIN_ERROR = "SIGNIN_ERROR";
+export function signInError() {
+  return {
+    type: SIGNIN_ERROR,
+    payload: true
   };
 }
 

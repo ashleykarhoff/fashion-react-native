@@ -1,13 +1,27 @@
 import React from "react";
 import { createAccount } from "../redux/actions";
 import { connect } from "react-redux";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { Formik } from "formik";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { styles, colors } from "../assets/styles";
 import { SignupSchema } from "../validations/validation";
 
 class Signup extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state;
+    return {
+      headerLeft: () => (
+        <TouchableOpacity
+          style={styles.leftIcon}
+          onPress={() => navigation.navigate("Signin")}
+        >
+          <Image source={require("../assets/images/back.png")} />
+        </TouchableOpacity>
+      )
+    };
+  };
+
   componentDidUpdate() {
     if (this.props.session) {
       this.props.navigation.navigate("Home");
@@ -39,6 +53,12 @@ class Signup extends React.Component {
               <Text style={styles.formHeader}>Create new account</Text>
             </View>
             <View style={styles.formContainer}>
+              {this.props.passwordError ? (
+                <Text style={styles.formTextError}>
+                  {" "}
+                  * Passwords do not match
+                </Text>
+              ) : null}
               <View style={styles.formTextContainer}>
                 {errors.firstName && touched.firstName ? (
                   <Text style={styles.formTextError}>
@@ -52,7 +72,7 @@ class Signup extends React.Component {
                   onBlur={handleBlur("firstName")}
                   value={values.firstName}
                   placeholder="First name"
-                  placeholderTextColor={colors.grey}
+                  placeholderTextColor={colors.navy}
                 />
               </View>
               <View style={styles.formTextContainer}>
@@ -66,7 +86,7 @@ class Signup extends React.Component {
                   onBlur={handleBlur("email")}
                   value={values.email}
                   placeholder="Email"
-                  placeholderTextColor="#505050"
+                  placeholderTextColor={colors.navy}
                 />
               </View>
               <View style={styles.formTextContainer}>
@@ -79,7 +99,7 @@ class Signup extends React.Component {
                   onBlur={handleBlur("password")}
                   value={values.password}
                   placeholder="Password"
-                  placeholderTextColor="#505050"
+                  placeholderTextColor={colors.navy}
                   secureTextEntry
                 />
               </View>
@@ -96,7 +116,7 @@ class Signup extends React.Component {
                   onBlur={handleBlur("passwordConfirmation")}
                   value={values.passwordConfirmation}
                   placeholder="Confirm Password"
-                  placeholderTextColor="#505050"
+                  placeholderTextColor={colors.navy}
                   secureTextEntry
                 />
               </View>
@@ -123,7 +143,8 @@ class Signup extends React.Component {
 function mapStateToProps(state) {
   return {
     session: state.session.session,
-    emailTaken: state.session.emailTaken
+    emailTaken: state.session.emailTaken,
+    passwordError: state.session.passwordError
   };
 }
 
