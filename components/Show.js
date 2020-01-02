@@ -3,7 +3,7 @@ import { View, Text, Image, Button } from "react-native";
 import { Linking } from "expo";
 import { connect } from "react-redux";
 import { fetchShowItem, handleDelete } from "../redux/actions";
-import styles from "../assets/styles";
+import { styles } from "../assets/styles";
 
 class Show extends Component {
   componentDidMount = () => {

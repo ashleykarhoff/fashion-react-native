@@ -8,7 +8,7 @@ import {
   signOut,
   setModalVisibility
 } from "./../redux/actions";
-import styles from "../assets/styles";
+import { styles } from "../assets/styles";
 
 class Discovery extends Component {
   static navigationOptions = ({ navigation }) => {

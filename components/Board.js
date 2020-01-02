@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { getSavedItems } from "./../redux/actions";
-import styles from "../assets/styles";
+import { styles } from "../assets/styles";
 
 class Board extends Component {
   componentDidMount() {
