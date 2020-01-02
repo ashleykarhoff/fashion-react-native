@@ -1,11 +1,13 @@
 import fetch from "cross-fetch";
 import { AsyncStorage } from "react-native";
 
+const url = "http://192.168.1.233:3000/api/v1/";
+
 // AUTHENTICATION ACTIONS
 export const SIGNIN = "SIGNIN";
 export function signIn(email, password) {
   return function(dispatch) {
-    return fetch(`http://localhost:3000/api/v1/sessions`, {
+    return fetch(`${url}sessions`, {
       method: "POST",
       headers: {
         "content-type": "application/json"
@@ -68,7 +70,7 @@ export function getSession() {
 export const CREATE_ACCOUNT = "CREATE_ACCOUNT";
 export function createAccount(data) {
   return function(dispatch) {
-    return fetch(`http://localhost:3000/api/v1/users`, {
+    return fetch(`${url}users`, {
       method: "POST",
       headers: {
         "content-type": "application/json"
@@ -105,7 +107,7 @@ export function emailTaken(message) {
 export const CREATE_BOARD = "CREATE_BOARD";
 export function createBoard(userId, title = "") {
   return function(dispatch) {
-    return fetch(`http://localhost:3000/api/v1/boards`, {
+    return fetch(`${url}boards`, {
       method: "POST",
       headers: {
         "content-type": "application/json"
@@ -150,7 +152,7 @@ export function receiveUser(user) {
 export function fetchUser(userId) {
   return function(dispatch) {
     dispatch(requestUser(userId));
-    return fetch(`http://localhost:3000/api/v1/users/${userId}`)
+    return fetch(`${url}users/${userId}`)
       .then(
         resp => resp.json(),
         error => console.log("An error occured ", error)
@@ -180,7 +182,7 @@ export function receiveItems(json) {
 export function fetchItems() {
   return function(dispatch) {
     dispatch(requestItems());
-    return fetch(`http://localhost:3000/api/v1/items`)
+    return fetch(`${url}items`)
       .then(resp => resp.json())
       .then(json => dispatch(receiveItems(json)))
       .catch(console.error);
@@ -197,7 +199,7 @@ export function saveItem(item) {
 
 export function persistItem(item, boardId) {
   return function(dispatch) {
-    return fetch(`http://localhost:3000/api/v1/board_items`, {
+    return fetch(`${url}board_items`, {
       method: "POST",
       headers: {
         "content-type": "application/json"
@@ -223,7 +225,7 @@ export function receiveSavedItems(items) {
 }
 export function getSavedItems(boardId) {
   return function(dispatch) {
-    return fetch(`http://localhost:3000/api/v1/board_items`)
+    return fetch(`${url}board_items`)
       .then(resp => resp.json())
       .then(json => json.filter(item => item.board_id === boardId))
       .then(items => dispatch(receiveSavedItems(items)))
@@ -251,7 +253,7 @@ export function receiveShowItem(json) {
 export function fetchShowItem(itemId) {
   return function(dispatch) {
     dispatch(showItem(itemId));
-    return fetch(`http://localhost:3000/api/v1/board_items/${itemId}`)
+    return fetch(`${url}board_items/${itemId}`)
       .then(resp => resp.json())
       .then(json => dispatch(receiveShowItem(json)))
       .catch(console.error);
@@ -268,7 +270,7 @@ export function removeItem(item) {
 
 export function handleDelete(itemId) {
   return function(dispatch) {
-    return fetch(`http://localhost:3000/api/v1/board_items/${itemId}`, {
+    return fetch(`${url}board_items/${itemId}`, {
       method: "DELETE"
     })
       .then(resp => resp.json())

@@ -7,16 +7,13 @@ import SignIn from "../components/SignIn";
 import Signup from "../components/Signup";
 import { styles } from "../assets/styles";
 
-const SignInStack = createStackNavigator({
+const AuthStack = createStackNavigator({
   Signin: {
     screen: SignIn,
     navigationOptions: () => ({
       headerStyle: styles.formNav
     })
-  }
-});
-
-const SignUpStack = createStackNavigator({
+  },
   Signup: {
     screen: Signup,
     navigationOptions: () => ({
@@ -41,11 +38,8 @@ const AppStack = createStackNavigator({
 });
 
 const App = createSwitchNavigator({
-  SignInStack: {
-    screen: SignInStack
-  },
-  SignUpStack: {
-    screen: SignUpStack
+  AuthStack: {
+    screen: AuthStack
   },
   AppStack: {
     screen: AppStack
